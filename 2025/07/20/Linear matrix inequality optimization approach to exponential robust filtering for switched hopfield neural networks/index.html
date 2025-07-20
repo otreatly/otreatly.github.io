@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 7.3.0">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,15 +17,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Archives - 白船长的博客</title>
+  <title>白船长的博客</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="https://otreatly.github.io/archives/">
+    <meta name="description" content="Linear matrix inequality optimization approach to exponential robust filtering for switched hopfield neural networks 摘要 本文关注具有时滞的切换 Hopfield 神经网络的时滞相关指数鲁棒滤波问题。提出了一种新的时滞相关切换指数鲁棒滤波器，该滤波器导致具有保证鲁棒性能的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="白船长的博客">
+<meta property="og:url" content="https://otreatly.github.io/2025/07/20/Linear%20matrix%20inequality%20optimization%20approach%20to%20exponential%20robust%20filtering%20for%20switched%20hopfield%20neural%20networks/">
 <meta property="og:site_name" content="白船长的博客">
+<meta property="og:description" content="Linear matrix inequality optimization approach to exponential robust filtering for switched hopfield neural networks 摘要 本文关注具有时滞的切换 Hopfield 神经网络的时滞相关指数鲁棒滤波问题。提出了一种新的时滞相关切换指数鲁棒滤波器，该滤波器导致具有保证鲁棒性能的">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
+<meta property="article:published_time" content="2025-07-20T15:15:51.417Z">
+<meta property="article:modified_time" content="2025-03-19T08:30:41.475Z">
 <meta property="article:author" content="Captain White">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
@@ -44,7 +48,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"白船长的博客","description":"","url":"https://otreatly.github.io"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"dateCreated":"2025-07-20T23:15:51+08:00","dateModified":"2025-03-19T16:30:41+08:00","datePublished":"2025-07-20T23:15:51+08:00","description":"","headline":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://otreatly.github.io/2025/07/20/Linear%20matrix%20inequality%20optimization%20approach%20to%20exponential%20robust%20filtering%20for%20switched%20hopfield%20neural%20networks/"},"publisher":{"@type":"Organization","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4","logo":{"@type":"ImageObject","url":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"}},"url":"https://otreatly.github.io/2025/07/20/Linear%20matrix%20inequality%20optimization%20approach%20to%20exponential%20robust%20filtering%20for%20switched%20hopfield%20neural%20networks/","image":[]}</script>
   
 <style>mjx-container[jax="SVG"] {
   direction: ltr;
@@ -161,7 +165,7 @@ mjx-container[display="true"] + br {
 </style></head>
 <body>
 
-<div class="l_body index" id="start" layout="undefined" type="undefined" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">白船长的博客</div><div class="sub normal cap">分享学习、感悟、日常</div><div class="sub hover cap" style="opacity:0"> Designed by xiaoshuai </div></a></div></header>
@@ -173,17 +177,261 @@ mjx-container[display="true"] + br {
 <div class="widgets">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
 
+
+
 <widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2025/07/18/index/"><span class="title"><strong>备忘录</strong><span class="dot"></span>notes</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/otreatly" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://cdn.mousebomb.org/blog/github-142-svgrepo-com.svg"/></a><a class="social" href="https://space.bilibili.com/276588305?spm_id_from=333.1007.0.0" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://s1.aigei.com/src/img/png/64/64517927d75d4c4d940cc31053cf6d42.png?imageMogr2/auto-orient/thumbnail/!282x282r/gravity/Center/crop/282x282/quality/85/%7CimageView2/2/w/282&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:X1PbTTLqipc3GxmvsRT_TvvF8Qs="/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/942ebbf1a4b91.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">白船长的博客</div><div class="sub normal cap">分享学习、感悟、日常</div><div class="sub hover cap" style="opacity:0"> Designed by xiaoshuai </div></a></div></header>
-
- 
 
 
-<div class="navbar top"><div class="navbar-blur"><div class="navbar-container"><nav class="post"><a href="/">Recent</a><a class="active" href="/archives/">Archives</a></nav></div></div></div><div class="post-list archives"><article class="" id="archive"><div class='archive-header h4'>2025</div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Adaptive%20kalman%20filtering%20algorithms%20for%20integrating%20GPS%20and%20low%20cost%20IN/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/A%20Novel%20Adaptive%20Kalman%20Filter%20With%20Inaccurate%20Process%20and%20Measurement%20Noise%20Covariance%20Matrices/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/The%20interacting%20multiple%20model%20algorithm%20for%20systems%20with%20markovian%20switching%20coefficients/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Risk-sensitive%20filtering%20for%20jump%20Markov%20linear%20systems/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Recursive%20Noise%20Adaptive%20Kalman%20Filtering%20by%20Variational%20Bayesian%20Approximations%20%C2%A0/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Linear%20matrix%20inequality%20optimization%20approach%20to%20exponential%20robust%20filtering%20for%20switched%20hopfield%20neural%20networks/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/19/Latent-KalmanNet%20Learned%20kalman%20filtering%20for%20tracking%20from%20high%20dimensional%20signals/"><time>07-19</time><span>2025-07-19</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/index/"><time>07-18</time><span>notes</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/test/"><time>07-18</time><span>2025-07-18</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/Linux%E5%B7%A5%E5%85%B7/"><time>07-18</time><span>2025-07-18</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/KalmanNet/"><time>07-18</time><span>2025-07-18</span></a></div></article></div>
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-07-20T15:15:51.417Z">2025-07-20</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-03-19T08:30:41.475Z">2025-03-19</time></span></div></div></div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="linear-matrix-inequality-optimization-approach-to-exponential-robust-filtering-for-switched-hopfield-neural-networks">Linear
+matrix inequality optimization approach to exponential robust filtering
+for switched hopfield neural networks</h1>
+<h2 id="摘要"><strong>摘要</strong></h2>
+<p>本文关注具有时滞的切换 Hopfield
+神经网络的时滞相关指数鲁棒滤波问题。提出了一种新的时滞相关切换指数鲁棒滤波器，该滤波器导致具有保证鲁棒性能的指数稳定滤波误差系统。这些类型神经网络的切换指数鲁棒滤波器的设计可以通过求解线性矩阵不等式（LMI）来实现，这可以使用标准数值包轻松实现。给出了一个示例来说明所提出滤波器的有效性。</p>
+<h3 id="建立在先前研究的基础上"><strong>建立在先前研究的基础上</strong></h3>
+<ul>
+<li>这些神经网络的指数稳定性在5中未进行研究。然而，本文在定理 3
+的证明中展示了滤波误差系统的指数稳定性。</li>
+</ul>
+<h3 id="对早期声明的反驳"><strong>对早期声明的反驳</strong></h3>
+<ul>
+<li>参考文献5讨论了权重矩阵的自适应学习问题。因此，[参考文献5]中的结果不能应用于滤波问题。
+因此，5中的结果不能应用于滤波问题。与5中的结果相比，本文考虑了切换
+Hopfield 神经网络的滤波问题。 在论文中，我们提出了一种新的切换指数
+H∞滤波器用于这些神经网络。论文中提出的滤波器形式、LMI
+条件、Lyapunov-Krasovskii
+泛函、指数稳定性以及应用实例与文献5中的不同。</li>
+</ul>
+<h2 id="未来工作">未来工作</h2>
+<ol type="1">
+<li>减少LMI保守性（如结合自由权矩阵法）；</li>
+<li>离散时间SHNN的滤波设计；</li>
+<li>多时滞与随机切换场景的扩展。</li>
+</ol>
+<h2 id="关键方法与理论贡献">关键方法与理论贡献</h2>
+<ol type="1">
+<li><p><strong>滤波器设计</strong></p>
+<ul>
+<li><p><strong>结构</strong>：基于切换信号的多模态滤波器，形式为：</p>
+<p>x<sup>˙(t)=∑i=1Nξi(t)[Aix<sup>(t)+Wiϕ(x</sup>(t−τ))+L(y(t)−y^(t))]<em>x</em></sup>˙(<em>t</em>)=<em>i</em>=1∑*N**ξi<em>(</em>t*)[<em>Ai<strong>x<em>^(</em>t<em>)+</em>Wi</strong>ϕ</em>(<em>x</em><sup>(<em>t</em>−<em>τ</em>))+<em>L</em>(<em>y</em>(<em>t</em>)−<em>y</em></sup>(<em>t</em>))]</p>
+<p>其中L<em>L</em>为待设计的滤波器增益矩阵。</p></li>
+<li><p><strong>目标</strong>：通过增益L<em>L</em>使滤波误差e(t)=x(t)−x<sup>(t)<em>e</em>(<em>t</em>)=<em>x</em>(<em>t</em>)−<em>x</em></sup>(<em>t</em>)满足指数稳定性和H∞性能。</p></li>
+</ul></li>
+<li><p><strong>Lyapunov-Krasovskii泛函与LMI条件</strong></p>
+<ul>
+<li><p><strong>构造新型泛函</strong>：结合时滞项与指数权重项，形式为：</p>
+<p>V(t)=exp⁡(κt)eT(t)Pe(t)+积分项（含时滞状态与干扰）<em>V</em>(<em>t</em>)=exp(<em>κt</em>)<em>eT</em>(<em>t</em>)<em>Pe</em>(<em>t</em>)+积分项（含时滞状态与干扰）</p></li>
+<li><p><strong>稳定性分析</strong>：通过Jensen不等式和矩阵变换，导出保证指数稳定性和H∞性能的<strong>LMI条件</strong>：</p>
+<p>[块矩阵（含时滞、增益、干扰项）]&lt;0[块矩阵（含时滞、增益、干扰项）]&lt;0</p></li>
+<li><p><strong>滤波器增益求解</strong>：通过LMI可行解M=PL<em>M</em>=<em>PL</em>，反推L=P−1M<em>L</em>=<em>P</em>−1<em>M</em>。</p></li>
+</ul></li>
+<li><p><strong>理论优势</strong></p>
+<ul>
+<li><strong>时滞相关</strong>：直接处理时滞影响，避免保守性；</li>
+<li><strong>指数稳定性</strong>：误差以指数速率收敛；</li>
+<li><strong>H∞性能</strong>：干扰衰减水平γ<em>γ</em>可调。</li>
+</ul></li>
+</ol>
+<h3 id="关键点"><strong>关键点</strong></h3>
+<p>这篇论文的局限性包括 LMI
+条件的潜在保守性，如果κ和γ分别被选为较大和较小，这种保守性可能会增加。
+未来工作包括通过使用增强的 Lyapunov-Krasovskii
+泛函和自由加权矩阵方法来减少 LMI 条件的保守性。
+这项研究的实际应用领域包括具有时延的切换 Hopfield
+神经网络的估计与控制。所提出的滤波器可用于多个领域，如机械系统控制、汽车工业、开关电源转换器以及其他许多领域。
+这篇论文的实际应用包括设计具有时间延迟的切换 Hopfield
+神经网络的滤波器，这些滤波器可用于信号处理和控制系统等各个领域。</p>
+<h4 id="关键概念"><strong>关键概念</strong></h4>
+<p>#指数稳定性; #时间延迟; #神经网络; #线性矩阵不等式; #声明/滤波问题;
+#滤波问题</p>
+<p>引用</p>
+<p>本文提出了一种新的切换指数 H∞滤波器，用于具有时间延迟的切换 Hopfield
+神经网络，该滤波器保证了滤波误差系统的指数稳定性，并具有指定的
+H∞性能水平。</p>
+<h4 id="关键发现"><strong>关键发现</strong></h4>
+<p>该研究的关键发现是开发了一种针对具有时延的切换 Hopfield
+神经网络的指数
+H∞滤波器设计的方法，以及提出了一种新的可通过对线性矩阵不等式（LMI）进行求解来设计的时延相关指数
+H∞滤波器。该滤波器被证明是指数稳定的，并保证了 H∞性能。
+本文的主要发现包括开发了一种新的切换指数
+H∞滤波器、构建了一种新的李雅普诺夫-克拉索夫斯基泛函以及通过求解一个时延相关的
+LMI 来确定滤波器增益矩阵。 我们已通过开发一种新型指数
+H∞滤波器来解决具有时延的切换 Hopfield 神经网络的指数 H∞滤波问题 新
+Lyapunov–Krasovskii 函数的正确构造表明，滤波误差系统具有保证的
+H∞性能，并呈指数稳定 提出的成果预期可扩展到离散时间切换 Hopfield
+神经网络</p>
+<h4 id="目标">目标</h4>
+<p>本研究的目的是设计一个在 H∞意义上保证性能的适合于切换 Hopfield
+神经网络的滤波器，具体来说，要找到一个合适的滤波器，使得滤波误差系统是指数稳定的，并且具有保证的
+H∞性能。</p>
+<h4 id="方法">方法</h4>
+<p>本研究采用的方法包括构建一个新的李雅普诺夫-克拉索夫斯基泛函，以及使用线性矩阵不等式（LMI）来设计滤波器。通过求解线性矩阵不等式（LMI），可以实现所需切换指数
+H∞滤波器的设计，这可以通过标准数值算法轻松实现。
+本文采用的方法包括构建一个新的李雅普诺夫-克拉索夫斯基泛函、通过求解延迟相关的
+LMI 确定滤波器增益矩阵，以及使用 MATLAB LMI 控制工具箱求解 LMI。</p>
+<h5 id="数值仿真与验证"><strong>数值仿真与验证</strong></h5>
+<ul>
+<li><p><strong>模型参数</strong>：双模态SHNN，时滞τ=1<em>τ</em>=1，非线性激活函数为双曲正切，外部干扰为高斯噪声。</p></li>
+<li><p><strong>LMI求解</strong>：通过MATLAB
+LMI工具箱，设定γ=0.4<em>γ</em>=0.4，获得滤波器增益：</p>
+<p>L=[0.98910.5127]<em>L</em>=[0.98910.5127]</p></li>
+<li><p><strong>仿真结果</strong>：</p>
+<ul>
+<li><strong>图1-2</strong>：真实状态x1(t)<em>x</em>1(<em>t</em>)、x2(t)<em>x</em>2(<em>t</em>)与估计值x<sup>1(t)<em>x</em></sup>1(<em>t</em>)、x<sup>2(t)<em>x</em></sup>2(<em>t</em>)快速收敛；</li>
+<li><strong>图3</strong>：滤波误差e(t)<em>e</em>(<em>t</em>)在2秒内趋于稳定，验证指数稳定性；</li>
+<li><strong>标准差分析</strong>：γ=0.4<em>γ</em>=0.4时误差标准差为0.6483（e1<em>e</em>1）和0.4505（e2<em>e</em>2），增大γ<em>γ</em>至1.5时性能下降，符合理论预期。</li>
+</ul></li>
+</ul>
+<h4 id="结果"><strong>结果</strong></h4>
+<p>该研究的结果表明，所提出的滤波器具有指数稳定性，并保证
+H∞性能。滤波器可以通过求解线性矩阵不等式（LMI）来设计，滤波器的增益矩阵可以表示为
+L = P^(-1)M。
+本文结果表明，所提出的滤波器保证了滤波误差系统的指数稳定性，并具有指定的
+H∞性能水平，滤波器增益矩阵可以通过求解一个时延相关的 LMI 来确定。</p>
+<h5 id="发现">发现</h5>
+<p>本文提出的成果预期可扩展到离散时间切换 Hopfield 神经网络</p>
+<h4 id="局限性"><strong>局限性</strong></h4>
+<p>这篇论文的局限性包括</p>
+<ul>
+<li><p>LMI
+条件的潜在保守性，如果κ和γ分别被选为较大和较小，这种保守性可能会增加</p></li>
+<li><p>LMI条件可能保守（未引入自由权矩阵）；</p></li>
+<li><p>未扩展至离散时间系统。</p></li>
+</ul>
+<h2 id="结论">结论</h2>
+<p>本研究的结论是，所提出的基于延迟的指数 H∞滤波器对于具有时延的切换
+Hopfield
+神经网络是有效的，并且可以通过求解线性矩阵不等式（LMI）来设计该滤波器。该滤波器具有保证的
+H∞性能和指数稳定性。 本文结论是，所提出的切换指数
+H∞滤波器在保证滤波误差系统的指数稳定性以及满足特定的
+H∞性能水平方面是有效的，并且可以通过求解一个时延相关的 LMI
+来确定滤波器的增益矩阵</p>
+<h2 id="参考文献"><strong>参考文献</strong></h2>
+<p>[<strong>1</strong>] Hopfield, J.J.: Neurons with grade response have
+collective computational properties like those of a two-state neurons.
+Proc. Natl. Acad. Sci. 81, 3088–3092 (1984) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Hopfield%2C%20J.J.%20Neurons%20with%20grade%20response%20have%20collective%20computational%20properties%20like%20those%20of%20a%20two-state%20neurons%201984&amp;author=Hopfield&amp;title=Neurons%20with%20grade%20response%20have%20collective%20computational%20properties%20like%20those%20of%20a%20two-state%20neurons&amp;year=1984">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Hopfield%2C%20J.J.%20Neurons%20with%20grade%20response%20have%20collective%20computational%20properties%20like%20those%20of%20a%20two-state%20neurons%201984">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AHopfield%2Ctitle%3ANeurons%20with%20grade%20response%20have%20collective%20computational%20properties%20like%20those%20of%20a%20two-state%20neurons%2Cyear%3A1984">Scite</a></p>
+<p>[<strong>2</strong>] Gupta, M.M., Jin, L., Homma, N.: Static and
+Dynamic Neural Networks. Wiley-Interscience, New York (2003) <a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Gupta%2C%20M.M.%20Jin%2C%20L.%20Homma%2C%20N.%20Static%20and%20Dynamic%20Neural%20Networks%202003">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Gupta%2C%20M.M.%20Jin%2C%20L.%20Homma%2C%20N.%20Static%20and%20Dynamic%20Neural%20Networks%202003">GScholar</a></p>
+<p>[<strong>3</strong>] Huang, H., Qu, Y., Li, H.: Robust stability
+analysis of switched Hopfield neural networks with timevarying delay
+under uncertainty. Phys. Lett. A 345, 345–354 (2005) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Huang%2C%20H.%20Qu%2C%20Y.%20Li%2C%20H.%20Robust%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timevarying%20delay%20under%20uncertainty%202005&amp;author=Huang&amp;title=Robust%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timevarying%20delay%20under%20uncertainty&amp;year=2005">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Huang%2C%20H.%20Qu%2C%20Y.%20Li%2C%20H.%20Robust%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timevarying%20delay%20under%20uncertainty%202005">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AHuang%2Ctitle%3ARobust%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timevarying%20delay%20under%20uncertainty%2Cyear%3A2005">Scite</a></p>
+<p>[<strong>4</strong>] Lou, X.Y., Cui, B.T.: Delay-dependent criteria
+for robust stability of uncertain switched Hopfield neural networks.
+Int. J. Autom. Comput. 4, 304–314 (2007) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Lou%2C%20X.Y.%20Cui%2C%20B.T.%20Delay-dependent%20criteria%20for%20robust%20stability%20of%20uncertain%20switched%20Hopfield%20neural%20networks%202007&amp;author=Lou&amp;title=Delay-dependent%20criteria%20for%20robust%20stability%20of%20uncertain%20switched%20Hopfield%20neural%20networks&amp;year=2007">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Lou%2C%20X.Y.%20Cui%2C%20B.T.%20Delay-dependent%20criteria%20for%20robust%20stability%20of%20uncertain%20switched%20Hopfield%20neural%20networks%202007">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3ALou%2Ctitle%3ADelay-dependent%20criteria%20for%20robust%20stability%20of%20uncertain%20switched%20Hopfield%20neural%20networks%2Cyear%3A2007">Scite</a></p>
+<p>[<strong>5</strong>] Ahn, C.K.: An H∞ approach to stability analysis
+of switched Hopfield neural networks with timedelay. Nonlinear Dyn. 60,
+703–711 (2010) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Ahn%2C%20C.K.%20An%20H∞%20approach%20to%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timedelay%202010&amp;author=Ahn&amp;title=An%20H∞%20approach%20to%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timedelay&amp;year=2010">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Ahn%2C%20C.K.%20An%20H∞%20approach%20to%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timedelay%202010">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AAhn%2Ctitle%3AAn%20H∞%20approach%20to%20stability%20analysis%20of%20switched%20Hopfield%20neural%20networks%20with%20timedelay%2Cyear%3A2010">Scite</a></p>
+<p>[<strong>6</strong>] Wang, Z., Ho, D.W.C., Liu, X.: State estimation
+for delayed neural networks. IEEE Trans. Neural Netw. 16, 279–284 (2005)
+<a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Wang%2C%20Z.%20Ho%2C%20D.W.C.%20Liu%2C%20X.%20State%20estimation%20for%20delayed%20neural%20networks%202005&amp;author=Wang&amp;title=State%20estimation%20for%20delayed%20neural%20networks&amp;year=2005">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Wang%2C%20Z.%20Ho%2C%20D.W.C.%20Liu%2C%20X.%20State%20estimation%20for%20delayed%20neural%20networks%202005">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AWang%2Ctitle%3AState%20estimation%20for%20delayed%20neural%20networks%2Cyear%3A2005">Scite</a></p>
+<p>[<strong>7</strong>] He, Y., Wang, Q.G., Wu, M., Lin, C.:
+Delay-dependent state estimation for delayed neural networks. IEEE
+Trans. Neural Netw. 17, 1077–1081 (2006) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=He%2C%20Y.%20Wang%2C%20Q.G.%20Wu%2C%20M.%20Lin%2C%20C.%20Delay-dependent%20state%20estimation%20for%20delayed%20neural%20networks%202006&amp;author=He&amp;title=Delay-dependent%20state%20estimation%20for%20delayed%20neural%20networks&amp;year=2006">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=He%2C%20Y.%20Wang%2C%20Q.G.%20Wu%2C%20M.%20Lin%2C%20C.%20Delay-dependent%20state%20estimation%20for%20delayed%20neural%20networks%202006">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AHe%2Ctitle%3ADelay-dependent%20state%20estimation%20for%20delayed%20neural%20networks%2Cyear%3A2006">Scite</a></p>
+<p>[<strong>8</strong>] Liu, Y., Wang, Z., Liu, X.: Design of
+exponential state estimators for neural networks with mixed time delays.
+Phys. Lett. A 364, 401–412 (2007) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Liu%2C%20Y.%20Wang%2C%20Z.%20Liu%2C%20X.%20Design%20of%20exponential%20state%20estimators%20for%20neural%20networks%20with%20mixed%20time%20delays%202007&amp;author=Liu&amp;title=Design%20of%20exponential%20state%20estimators%20for%20neural%20networks%20with%20mixed%20time%20delays&amp;year=2007">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Liu%2C%20Y.%20Wang%2C%20Z.%20Liu%2C%20X.%20Design%20of%20exponential%20state%20estimators%20for%20neural%20networks%20with%20mixed%20time%20delays%202007">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3ALiu%2Ctitle%3ADesign%20of%20exponential%20state%20estimators%20for%20neural%20networks%20with%20mixed%20time%20delays%2Cyear%3A2007">Scite</a></p>
+<p>[<strong>9</strong>] Wang, Z., Liu, Y., Liu, X.: State estimation for
+jumping recurrent neural networks with discrete and distributed delays.
+Neural Netw. 22, 41–48 (2009) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Wang%2C%20Z.%20Liu%2C%20Y.%20Liu%2C%20X.%20State%20estimation%20for%20jumping%20recurrent%20neural%20networks%20with%20discrete%20and%20distributed%20delays%202009&amp;author=Wang&amp;title=State%20estimation%20for%20jumping%20recurrent%20neural%20networks%20with%20discrete%20and%20distributed%20delays&amp;year=2009">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Wang%2C%20Z.%20Liu%2C%20Y.%20Liu%2C%20X.%20State%20estimation%20for%20jumping%20recurrent%20neural%20networks%20with%20discrete%20and%20distributed%20delays%202009">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AWang%2Ctitle%3AState%20estimation%20for%20jumping%20recurrent%20neural%20networks%20with%20discrete%20and%20distributed%20delays%2Cyear%3A2009">Scite</a></p>
+<p>[<strong>10</strong>] Stoorvogel, A.: The H∞ Control Problem: A
+State-Space Approach. Prentice Hall, London (1992) <a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Stoorvogel%2C%20A.%20The%20H∞%20Control%20Problem%3A%20A%20State-Space%20Approach%201992">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Stoorvogel%2C%20A.%20The%20H∞%20Control%20Problem%3A%20A%20State-Space%20Approach%201992">GScholar</a></p>
+<p>[<strong>11</strong>] Huang, H., Feng, G.: Delay-dependent H∞ and
+generalized H2 filtering for delayed neural networks. IEEE Trans.
+Circuits Syst. I, Fundam. Theory Appl. 56, 846–857 (2009) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Huang%2C%20H.%20Feng%2C%20G.%20Delay-dependent%20H∞%20and%20generalized%20H2%20filtering%20for%20delayed%20neural%20networks%202009&amp;author=Huang&amp;title=Delay-dependent%20H∞%20and%20generalized%20H2%20filtering%20for%20delayed%20neural%20networks&amp;year=2009">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Huang%2C%20H.%20Feng%2C%20G.%20Delay-dependent%20H∞%20and%20generalized%20H2%20filtering%20for%20delayed%20neural%20networks%202009">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AHuang%2Ctitle%3ADelay-dependent%20H∞%20and%20generalized%20H2%20filtering%20for%20delayed%20neural%20networks%2Cyear%3A2009">Scite</a></p>
+<p>[<strong>12</strong>] Boyd, S., Ghaoui, L.E., Feron, E.,
+Balakrishinan, V.: Linear Matrix Inequalities in Systems and Control
+Theory. SIAM, Philadelphia (1994) <a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Boyd%20S%20Ghaoui%20LE%20Feron%20E%20Balakrishinan%20V%20Linear%20Matrix%20Inequalities%20in%20Systems%20and%20Control%20Theory%20SIAM%20Philadelphia%201994">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Boyd%20S%20Ghaoui%20LE%20Feron%20E%20Balakrishinan%20V%20Linear%20Matrix%20Inequalities%20in%20Systems%20and%20Control%20Theory%20SIAM%20Philadelphia%201994">GScholar</a></p>
+<p>[<strong>13</strong>] Gahinet, P., Nemirovski, A., Laub, A.J.,
+Chilali, M.: LMI Control Toolbox. The MathWorks, Inc., Natik (1995) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Gahinet%20P%20Nemirovski%20A%20Laub%20AJ%20Chilali%20M%20LMI%20Control%20Toolbox%20The%20MathWorks%20Inc%20Natik%201995&amp;author=Gahinet&amp;title=&amp;year=1995">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Gahinet%20P%20Nemirovski%20A%20Laub%20AJ%20Chilali%20M%20LMI%20Control%20Toolbox%20The%20MathWorks%20Inc%20Natik%201995">GScholar</a>
+<a href="typora://app/scite_tallies?query=13.%20Gahinet%2C%20P.%2C%20Nemirovski%2C%20A.%2C%20Laub%2C%20A.J.%2C%20Chilali%2C%20M.%3A%20LMI%20Control%20Toolbox.%20The%20MathWorks%2C%20Inc.%2C%20Natik%20(1995)">Scite</a></p>
+<p>[<strong>14</strong>] Narendra, K.S., Tripathi, S.S.: Identification
+and optimization of aircraft dynamics. J. Aircr. 10, 193– 199 (1973) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Narendra%2C%20K.S.%20Tripathi%2C%20S.S.%20Identification%20and%20optimization%20of%20aircraft%20dynamics%201973&amp;author=Narendra&amp;title=Identification%20and%20optimization%20of%20aircraft%20dynamics&amp;year=1973">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Narendra%2C%20K.S.%20Tripathi%2C%20S.S.%20Identification%20and%20optimization%20of%20aircraft%20dynamics%201973">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3ANarendra%2Ctitle%3AIdentification%20and%20optimization%20of%20aircraft%20dynamics%2Cyear%3A1973">Scite</a></p>
+<p>[<strong>15</strong>] Noldus, E.: Stabilization of a class of
+distributional convolutional equations. Int. J. Control 41, 947– <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Noldus%2C%20E.%20Stabilization%20of%20a%20class%20of%20distributional%20convolutional%20equations&amp;author=Noldus&amp;title=Stabilization%20of%20a%20class%20of%20distributional%20convolutional%20equations&amp;year=0000">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Noldus%2C%20E.%20Stabilization%20of%20a%20class%20of%20distributional%20convolutional%20equations">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3ANoldus%2Ctitle%3AStabilization%20of%20a%20class%20of%20distributional%20convolutional%20equations%2Cyear%3A0000">Scite</a></p>
+<p>[<strong>16</strong>] He, Y., Wu, M., She, J.H., Liu, G.P.:
+Delay-dependent robust stability criteria for uncertain neutral systems
+with mixed delays. Syst. Control Lett. 51, 57–65 (2004) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=He%2C%20Y.%20Wu%2C%20M.%20She%2C%20J.H.%20Liu%2C%20G.P.%20Delay-dependent%20robust%20stability%20criteria%20for%20uncertain%20neutral%20systems%20with%20mixed%20delays%202004&amp;author=He&amp;title=Delay-dependent%20robust%20stability%20criteria%20for%20uncertain%20neutral%20systems%20with%20mixed%20delays&amp;year=2004">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=He%2C%20Y.%20Wu%2C%20M.%20She%2C%20J.H.%20Liu%2C%20G.P.%20Delay-dependent%20robust%20stability%20criteria%20for%20uncertain%20neutral%20systems%20with%20mixed%20delays%202004">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AHe%2Ctitle%3ADelay-dependent%20robust%20stability%20criteria%20for%20uncertain%20neutral%20systems%20with%20mixed%20delays%2Cyear%3A2004">Scite</a></p>
+<p>[<strong>17</strong>] Wu, M., He, Y., She, J.H., Liu, G.P.:
+Delay-dependent criteria for robust stability of time-varying delay
+systems. Automatica 40, 1435–1439 (2004) <a target="_blank" rel="noopener" href="http://engine.scholarcy.com/oa_version?query=Wu%2C%20M.%20He%2C%20Y.%20She%2C%20J.H.%20Liu%2C%20G.P.%20Delay-dependent%20criteria%20for%20robust%20stability%20of%20time-varying%20delay%20systems%202004&amp;author=Wu&amp;title=Delay-dependent%20criteria%20for%20robust%20stability%20of%20time-varying%20delay%20systems&amp;year=2004">OA</a>
+<a target="_blank" rel="noopener" href="https://scholar.google.co.uk/scholar?q=Wu%2C%20M.%20He%2C%20Y.%20She%2C%20J.H.%20Liu%2C%20G.P.%20Delay-dependent%20criteria%20for%20robust%20stability%20of%20time-varying%20delay%20systems%202004">GScholar</a>
+<a href="typora://app/scite_tallies?query=author%3AWu%2Ctitle%3ADelay-dependent%20criteria%20for%20robust%20stability%20of%20time-varying%20delay%20systems%2Cyear%3A2004">Scite</a></p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a
+target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享
+4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/2025/07/20/Recursive%20Noise%20Adaptive%20Kalman%20Filtering%20by%20Variational%20Bayesian%20Approximations%20%C2%A0/">2025-07-20</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2025/07/19/Latent-KalmanNet%20Learned%20kalman%20filtering%20for%20tracking%20from%20high%20dimensional%20signals/">2025-07-19</a></div></section></div>
+
+
+
+
+  <div class="related-wrap md-text" id="comments">
+    <section class='header cmt-title cap theme'>
+      <p>快来参与讨论吧~</p>
+
+    </section>
+    <section class='body cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align:middle;fill:currentColor;overflow:hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="otreatly+/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </section>
+  </div>
+
+
+
 <footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Captain White</a> 使用 <a
 target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar
 1.33.1</a> 主题创建。 本博客所有文章除特别声明外，均采用 <a
@@ -191,7 +439,14 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel'>
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linear-matrix-inequality-optimization-approach-to-exponential-robust-filtering-for-switched-hopfield-neural-networks"><span class="toc-text">Linear
+matrix inequality optimization approach to exponential robust filtering
+for switched hopfield neural networks</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-text">摘要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%9C%A8%E5%85%88%E5%89%8D%E7%A0%94%E7%A9%B6%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B8%8A"><span class="toc-text">建立在先前研究的基础上</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%97%A9%E6%9C%9F%E5%A3%B0%E6%98%8E%E7%9A%84%E5%8F%8D%E9%A9%B3"><span class="toc-text">对早期声明的反驳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="toc-text">未来工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%96%B9%E6%B3%95%E4%B8%8E%E7%90%86%E8%AE%BA%E8%B4%A1%E7%8C%AE"><span class="toc-text">关键方法与理论贡献</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%82%B9"><span class="toc-text">关键点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5"><span class="toc-text">关键概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%8F%91%E7%8E%B0"><span class="toc-text">关键发现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E4%BB%BF%E7%9C%9F%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-text">数值仿真与验证</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-text">结果</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%91%E7%8E%B0"><span class="toc-text">发现</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-text">局限性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">参考文献</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>Join Discussion</span></a></div></widget>
+</div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
@@ -685,6 +940,31 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 
 
 <!-- optional -->
+
+  <script type="module">
+  const el = document.querySelector('#comments #beaudar');
+  util.viewportLazyload(el, load_beaudar, false);
+
+  function load_beaudar() {
+    if (!el) return;
+    try {
+      el.innerHTML = '';
+    } catch (error) {
+      console.error(error);
+    }
+    const script = document.createElement('script');
+    script.src = 'https://beaudar.lipk.org/client.js';
+    script.async = true;
+    for (const key of Object.keys(el.attributes)) {
+      const attr = el.attributes[key];
+      if (['class', 'id'].includes(attr.name) === false) {
+        script.setAttribute(attr.name, attr.value);
+      }
+    }
+    el.appendChild(script);
+  }
+</script>
+
 
 
 

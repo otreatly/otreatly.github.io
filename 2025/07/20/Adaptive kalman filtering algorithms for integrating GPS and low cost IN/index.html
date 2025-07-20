@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 7.3.0">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,15 +17,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Tags - 白船长的博客</title>
+  <title>白船长的博客</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Tags">
-<meta property="og:url" content="https://otreatly.github.io/tags/">
+    <meta name="description" content="Adaptive kalman filtering algorithms for integrating GPS and low cost INS 研究背景与问题 低成本惯性导航系统（INS）因传感器误差大且时变，难以直接用于高精度导航。传统卡尔曼滤波（CKF）采用固定的噪声矩阵，无法适应动态变化的噪声特性，导致初始化时间长、姿态对准精度低。本文提出三种自适应卡尔曼滤波算法，通过实时调整噪声">
+<meta property="og:type" content="article">
+<meta property="og:title" content="白船长的博客">
+<meta property="og:url" content="https://otreatly.github.io/2025/07/20/Adaptive%20kalman%20filtering%20algorithms%20for%20integrating%20GPS%20and%20low%20cost%20IN/">
 <meta property="og:site_name" content="白船长的博客">
+<meta property="og:description" content="Adaptive kalman filtering algorithms for integrating GPS and low cost INS 研究背景与问题 低成本惯性导航系统（INS）因传感器误差大且时变，难以直接用于高精度导航。传统卡尔曼滤波（CKF）采用固定的噪声矩阵，无法适应动态变化的噪声特性，导致初始化时间长、姿态对准精度低。本文提出三种自适应卡尔曼滤波算法，通过实时调整噪声">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
+<meta property="article:published_time" content="2025-07-20T15:15:51.479Z">
+<meta property="article:modified_time" content="2025-03-19T08:28:55.234Z">
 <meta property="article:author" content="Captain White">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
@@ -44,7 +48,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"白船长的博客","description":"","url":"https://otreatly.github.io"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"dateCreated":"2025-07-20T23:15:51+08:00","dateModified":"2025-03-19T16:28:55+08:00","datePublished":"2025-07-20T23:15:51+08:00","description":"","headline":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://otreatly.github.io/2025/07/20/Adaptive%20kalman%20filtering%20algorithms%20for%20integrating%20GPS%20and%20low%20cost%20IN/"},"publisher":{"@type":"Organization","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4","logo":{"@type":"ImageObject","url":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"}},"url":"https://otreatly.github.io/2025/07/20/Adaptive%20kalman%20filtering%20algorithms%20for%20integrating%20GPS%20and%20low%20cost%20IN/","image":[]}</script>
   
 <style>mjx-container[jax="SVG"] {
   direction: ltr;
@@ -161,7 +165,7 @@ mjx-container[display="true"] + br {
 </style></head>
 <body>
 
-<div class="l_body index" id="start" layout="tags" type="undefined" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">白船长的博客</div><div class="sub normal cap">分享学习、感悟、日常</div><div class="sub hover cap" style="opacity:0"> Designed by xiaoshuai </div></a></div></header>
@@ -173,28 +177,131 @@ mjx-container[display="true"] + br {
 <div class="widgets">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
 
+
+
 <widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2025/07/18/index/"><span class="title"><strong>备忘录</strong><span class="dot"></span>notes</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/otreatly" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://cdn.mousebomb.org/blog/github-142-svgrepo-com.svg"/></a><a class="social" href="https://space.bilibili.com/276588305?spm_id_from=333.1007.0.0" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://s1.aigei.com/src/img/png/64/64517927d75d4c4d940cc31053cf6d42.png?imageMogr2/auto-orient/thumbnail/!282x282r/gravity/Center/crop/282x282/quality/85/%7CimageView2/2/w/282&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:X1PbTTLqipc3GxmvsRT_TvvF8Qs="/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/942ebbf1a4b91.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">白船长的博客</div><div class="sub normal cap">分享学习、感悟、日常</div><div class="sub hover cap" style="opacity:0"> Designed by xiaoshuai </div></a></div></header>
 
 
-  
-  
-  
 
-<div class="navbar top"><div class="navbar-blur"><div class="navbar-container"><nav class="post"><a href="/">Recent</a><a class="active" href="/tags/">Tags</a><a href="/archives/">Archives</a></nav></div></div></div>
-  <div class='post-list'>
-    <article class='' id='tags'>
-      
-        <a class='tag' href="/tags/Linux/">
-          <span class='name'>Linux</span>
-        </a>
-      
-    </article>
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-07-20T15:15:51.479Z">2025-07-20</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-03-19T08:28:55.234Z">2025-03-19</time></span></div></div></div>
+    
   </div>
+  </div><article class="md-text content"><h1 id="adaptive-kalman-filtering-algorithms-for-integrating-gps-and-low-cost-ins">Adaptive
+kalman filtering algorithms for integrating GPS and low cost INS</h1>
+<h4 id="研究背景与问题"><strong>研究背景与问题</strong></h4>
+<p>低成本惯性导航系统（INS）因传感器误差大且时变，难以直接用于高精度导航。传统卡尔曼滤波（CKF）采用固定的噪声矩阵，无法适应动态变化的噪声特性，导致初始化时间长、姿态对准精度低。本文提出三种自适应卡尔曼滤波算法，通过实时调整噪声模型提升GPS与INS集成的性能。</p>
+<hr>
+<h4 id="核心方法"><strong>核心方法</strong></h4>
+<ol type="1">
+<li><strong>过程噪声缩放（Process Noise Scaling）</strong>
+<ul>
+<li><strong>原理</strong>：根据创新序列（INS预测与GPS观测的差异）动态缩放过程噪声协方差矩阵
+(Q_k)，公式为： [P_{k}^{(-)} = P_{k-1}<sup>{(+)}</sup>{T} +
+S_{k}Q_{k-1}] 其中缩放因子 (S_k) 通过历史创新序列的方差比计算。</li>
+<li><strong>优势</strong>：计算简单，实时性强，显著缩短INS初始化时间。</li>
+</ul></li>
+<li><strong>多模型自适应估计（MMAE）</strong>
+<ul>
+<li><strong>原理</strong>：并行运行多个不同噪声模型的卡尔曼滤波器，基于残差概率动态加权融合各滤波器输出。</li>
+<li><strong>实现</strong>：设置6个滤波器（(Q_k)
+缩放因子从0.1到10000），引入最小概率阈值防止模型退化。</li>
+<li><strong>优势</strong>：适应性强，可处理复杂动态场景，但计算量较大。</li>
+</ul></li>
+<li><strong>自适应卡尔曼滤波器（AKF）</strong>
+<ul>
+<li><strong>原理</strong>：通过状态修正序列 (x_k = K_k v_k^{(-)})
+估计过程噪声协方差，公式为： [*k <sup>{k}x_jx_j</sup>{T}]</li>
+<li><strong>局限</strong>：对未建模误差（如传感器轴偏差、振动）敏感，试验中表现不佳。</li>
+</ul></li>
+</ol>
+<hr>
+<h4 id="实验设计与结果"><strong>实验设计与结果</strong></h4>
+<ul>
+<li><strong>试验场景</strong>：英国普利茅斯海域小型测量船，配备低成本Crossbow
+MEMS IMU与高精度POS/MV系统（作为真值）。</li>
+<li><strong>数据采集</strong>：固定GPS模糊度，基线距离3km，记录10分钟初始化机动（8字转向）及后续直线航行数据。</li>
+</ul>
+<p><strong>关键结果</strong></p>
+<ol type="1">
+<li><strong>过程噪声缩放</strong>：
+<ul>
+<li>偏航角（Yaw）对准时间从CKF的10分钟以上缩短至275秒，误差降低30%（0.36°
+vs. 0.52°）。</li>
+<li>横滚（Roll）与俯仰（Pitch）误差与CKF相当（0.04°）。</li>
+</ul></li>
+<li><strong>MMAE</strong>：
+<ul>
+<li>初始化时间303秒，偏航误差0.45°，略优于CKF但逊于过程噪声缩放。</li>
+<li>动态场景下能自适应切换噪声模型（如转向时选择大缩放因子模型）。</li>
+</ul></li>
+<li><strong>AKF</strong>：
+<ul>
+<li>因未建模误差（如杠杆臂偏差）导致姿态误差大于CKF，需进一步优化参数估计策略。</li>
+</ul></li>
+</ol>
+<hr>
+<h4 id="结论与意义"><strong>结论与意义</strong></h4>
+<ul>
+<li><strong>有效性</strong>：过程噪声缩放与MMAE显著提升INS初始化效率及动态性能，适合低成本INS与GPS集成。</li>
+<li><strong>局限性</strong>：AKF需更精确的误差建模；MMAE计算复杂度高，需硬件并行支持。</li>
+<li><strong>应用价值</strong>：为低成本导航系统提供实用化解决方案，减少对高冗余硬件的依赖。</li>
+</ul>
+<p><strong>未来方向</strong></p>
+<ol type="1">
+<li>增强算法鲁棒性，处理未建模误差（如传感器振动、轴偏差）。</li>
+<li>优化计算效率，探索并行化或简化模型实现。</li>
+<li>结合多传感器融合（如视觉、里程计）提升复杂环境适应性。</li>
+</ol>
+<hr>
+<h4 id="图表亮点"><strong>图表亮点</strong></h4>
+<ul>
+<li><strong>图4</strong>：创新序列显示初始化阶段误差达20cm，验证自适应算法的必要性。</li>
+<li><strong>图6</strong>：过程噪声缩放使偏航角快速收敛，CKF则持续波动。</li>
+<li><strong>图7</strong>：MMAE在机动阶段动态切换模型，体现其自适应能力。</li>
+</ul>
+<p>本文通过理论创新与实证分析，为低成本导航系统的工程化提供了重要参考。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a
+target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享
+4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">Older</div><a href="/2025/07/20/A%20Novel%20Adaptive%20Kalman%20Filter%20With%20Inaccurate%20Process%20and%20Measurement%20Noise%20Covariance%20Matrices/">2025-07-20</a></div></section></div>
+
+
+
+
+  <div class="related-wrap md-text" id="comments">
+    <section class='header cmt-title cap theme'>
+      <p>快来参与讨论吧~</p>
+
+    </section>
+    <section class='body cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align:middle;fill:currentColor;overflow:hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="otreatly+/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </section>
+  </div>
+
 
 
 <footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Captain White</a> 使用 <a
@@ -204,7 +311,13 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel'>
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#adaptive-kalman-filtering-algorithms-for-integrating-gps-and-low-cost-ins"><span class="toc-text">Adaptive
+kalman filtering algorithms for integrating GPS and low cost INS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E4%B8%8E%E9%97%AE%E9%A2%98"><span class="toc-text">研究背景与问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%96%B9%E6%B3%95"><span class="toc-text">核心方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%BB%93%E6%9E%9C"><span class="toc-text">实验设计与结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA%E4%B8%8E%E6%84%8F%E4%B9%89"><span class="toc-text">结论与意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E8%A1%A8%E4%BA%AE%E7%82%B9"><span class="toc-text">图表亮点</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>Join Discussion</span></a></div></widget>
+</div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
@@ -698,6 +811,31 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 
 
 <!-- optional -->
+
+  <script type="module">
+  const el = document.querySelector('#comments #beaudar');
+  util.viewportLazyload(el, load_beaudar, false);
+
+  function load_beaudar() {
+    if (!el) return;
+    try {
+      el.innerHTML = '';
+    } catch (error) {
+      console.error(error);
+    }
+    const script = document.createElement('script');
+    script.src = 'https://beaudar.lipk.org/client.js';
+    script.async = true;
+    for (const key of Object.keys(el.attributes)) {
+      const attr = el.attributes[key];
+      if (['class', 'id'].includes(attr.name) === false) {
+        script.setAttribute(attr.name, attr.value);
+      }
+    }
+    el.appendChild(script);
+  }
+</script>
+
 
 
 
