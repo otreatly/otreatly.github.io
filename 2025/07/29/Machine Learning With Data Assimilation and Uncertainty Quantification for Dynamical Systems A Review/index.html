@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 7.3.0">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,15 +17,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Archives - 白船长的博客</title>
+  <title>白船长的博客</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="https://otreatly.github.io/archives/">
+    <meta name="description" content="知识点分析 1. 降阶模型(reduced-order model,ROM) 1.1 本征正交分解(proper orthogonal decomposition,POD) 本征正交分解（Proper Orthogonal Decomposition, POD），亦被称为主成分分析（Principal Component Analysis, PCA），在样本识别领域，被称为Karh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="白船长的博客">
+<meta property="og:url" content="https://otreatly.github.io/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/">
 <meta property="og:site_name" content="白船长的博客">
+<meta property="og:description" content="知识点分析 1. 降阶模型(reduced-order model,ROM) 1.1 本征正交分解(proper orthogonal decomposition,POD) 本征正交分解（Proper Orthogonal Decomposition, POD），亦被称为主成分分析（Principal Component Analysis, PCA），在样本识别领域，被称为Karh">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
+<meta property="article:published_time" content="2025-07-28T16:05:29.395Z">
+<meta property="article:modified_time" content="2025-07-28T15:39:48.384Z">
 <meta property="article:author" content="Captain White">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
@@ -44,7 +48,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"白船长的博客","description":"","url":"https://otreatly.github.io"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"dateCreated":"2025-07-29T00:05:29+08:00","dateModified":"2025-07-28T23:39:48+08:00","datePublished":"2025-07-29T00:05:29+08:00","description":"","headline":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://otreatly.github.io/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/"},"publisher":{"@type":"Organization","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4","logo":{"@type":"ImageObject","url":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"}},"url":"https://otreatly.github.io/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/","image":[]}</script>
   
 <style>mjx-container[jax="SVG"] {
   direction: ltr;
@@ -161,7 +165,7 @@ mjx-container[display="true"] + br {
 </style></head>
 <body>
 
-<div class="l_body index" id="start" layout="undefined" type="undefined" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">白船长的博客</div><div class="sub normal cap">分享学习、感悟、日常</div><div class="sub hover cap" style="opacity:0"> Designed by xiaoshuai </div></a></div></header>
@@ -173,17 +177,96 @@ mjx-container[display="true"] + br {
 <div class="widgets">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
 
+
+
 <widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2025/07/18/index/"><span class="title"><strong>notes</strong><span class="dot"></span>notes</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/otreatly" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://cdn.mousebomb.org/blog/github-142-svgrepo-com.svg"/></a><a class="social" href="https://space.bilibili.com/276588305?spm_id_from=333.1007.0.0" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://s1.aigei.com/src/img/png/64/64517927d75d4c4d940cc31053cf6d42.png?imageMogr2/auto-orient/thumbnail/!282x282r/gravity/Center/crop/282x282/quality/85/%7CimageView2/2/w/282&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:X1PbTTLqipc3GxmvsRT_TvvF8Qs="/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/942ebbf1a4b91.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">白船长的博客</div><div class="sub normal cap">分享学习、感悟、日常</div><div class="sub hover cap" style="opacity:0"> Designed by xiaoshuai </div></a></div></header>
-
- 
 
 
-<div class="navbar top"><div class="navbar-blur"><div class="navbar-container"><nav class="post"><a href="/">Recent</a><a href="/topic/">Topic</a><a class="active" href="/archives/">Archives</a></nav></div></div></div><div class="post-list archives"><article class="" id="archive"><div class='archive-header h4'>2025</div><div class="archive-list"><a class='post fs14' href="/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/"><time>07-29</time><span>2025-07-29</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/29/PCA%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/"><time>07-29</time><span>2025-07-29</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Adaptive%20kalman%20filtering%20algorithms%20for%20integrating%20GPS%20and%20low%20cost%20IN/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/A%20Novel%20Adaptive%20Kalman%20Filter%20With%20Inaccurate%20Process%20and%20Measurement%20Noise%20Covariance%20Matrices/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/The%20interacting%20multiple%20model%20algorithm%20for%20systems%20with%20markovian%20switching%20coefficients/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Risk-sensitive%20filtering%20for%20jump%20Markov%20linear%20systems/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Recursive%20Noise%20Adaptive%20Kalman%20Filtering%20by%20Variational%20Bayesian%20Approximations%20%C2%A0/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/20/Linear%20matrix%20inequality%20optimization%20approach%20to%20exponential%20robust%20filtering%20for%20switched%20hopfield%20neural%20networks/"><time>07-20</time><span>2025-07-20</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/19/Latent-KalmanNet%20Learned%20kalman%20filtering%20for%20tracking%20from%20high%20dimensional%20signals/"><time>07-19</time><span>2025-07-19</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/index/"><time>07-18</time><span>notes</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/test/"><time>07-18</time><span>2025-07-18</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/Linux%E5%B7%A5%E5%85%B7/"><time>07-18</time><span>2025-07-18</span></a></div><div class="archive-list"><a class='post fs14' href="/2025/07/18/KalmanNet/"><time>07-18</time><span>2025-07-18</span></a></div></article></div>
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-07-28T16:05:29.395Z">2025-07-29</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-07-28T15:39:48.384Z">2025-07-28</time></span></div></div></div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="知识点分析">知识点分析</h1>
+<h2 id="降阶模型reduced-order-modelrom">1. 降阶模型(reduced-order
+model,ROM)</h2>
+<h3 id="本征正交分解proper-orthogonal-decompositionpod">1.1
+本征正交分解(proper orthogonal decomposition,POD)</h3>
+<p><strong>本征正交分解</strong>（Proper Orthogonal Decomposition,
+POD），<strong>亦被称为主成分分析</strong>（Principal Component
+Analysis,
+PCA），在样本识别领域，<strong>被称为Karhunen-Loeve(K-L)展开方法</strong>。旨在从一组庞大的实验或模拟数据中获取一组低维最优基，然后用这组最优基来尽可能逼近原来的复杂系统。</p>
+<p>选用不同坐标系中，坐标的信息量在计算机中所占内存不同。以笛卡尔坐标系中在一条直线上的三个点为例：坐标分别为：<span class="math inline"><em>A</em>(1, 1)、<em>B</em>(2, 2)、<em>C</em>(3, 3)</span>，转换成<span class="math inline"><em>o</em><em>x</em><sup>″</sup></span>坐标系（以直线<span class="math inline"><em>y</em> = <em>x</em></span>为轴），信息变为<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="26.385ex" height="2.739ex" role="img" focusable="false" viewBox="0 -960.5 11662 1210.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g><g data-mml-node="mo" transform="translate(750,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msqrt" transform="translate(1139,0)"><g transform="translate(853,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(0,100.5)"><path data-c="221A" d="M95 178Q89 178 81 186T72 200T103 230T169 280T207 309Q209 311 212 311H213Q219 311 227 294T281 177Q300 134 312 108L397 -77Q398 -77 501 136T707 565T814 786Q820 800 834 800Q841 800 846 794T853 782V776L620 293L385 -193Q381 -200 366 -200Q357 -200 354 -197Q352 -195 256 15L160 225L144 214Q129 202 113 190T95 178Z"></path></g><rect width="500" height="60" x="853" y="840.5"></rect></g><g data-mml-node="mo" transform="translate(2492,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2881,0)"><g data-mml-node="mo"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">、</text></g></g><g data-mml-node="mi" transform="translate(3881,0)"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mo" transform="translate(4640,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mn" transform="translate(5029,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="msqrt" transform="translate(5529,0)"><g transform="translate(853,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(0,100.5)"><path data-c="221A" d="M95 178Q89 178 81 186T72 200T103 230T169 280T207 309Q209 311 212 311H213Q219 311 227 294T281 177Q300 134 312 108L397 -77Q398 -77 501 136T707 565T814 786Q820 800 834 800Q841 800 846 794T853 782V776L620 293L385 -193Q381 -200 366 -200Q357 -200 354 -197Q352 -195 256 15L160 225L144 214Q129 202 113 190T95 178Z"></path></g><rect width="500" height="60" x="853" y="840.5"></rect></g><g data-mml-node="mo" transform="translate(6882,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(7271,0)"><g data-mml-node="mo"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">、</text></g></g><g data-mml-node="mi" transform="translate(8271,0)"><path data-c="1D436" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path></g><g data-mml-node="mo" transform="translate(9031,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mn" transform="translate(9420,0)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></g><g data-mml-node="msqrt" transform="translate(9920,0)"><g transform="translate(853,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(0,100.5)"><path data-c="221A" d="M95 178Q89 178 81 186T72 200T103 230T169 280T207 309Q209 311 212 311H213Q219 311 227 294T281 177Q300 134 312 108L397 -77Q398 -77 501 136T707 565T814 786Q820 800 834 800Q841 800 846 794T853 782V776L620 293L385 -193Q381 -200 366 -200Q357 -200 354 -197Q352 -195 256 15L160 225L144 214Q129 202 113 190T95 178Z"></path></g><rect width="500" height="60" x="853" y="840.5"></rect></g><g data-mml-node="mo" transform="translate(11273,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></span>，原本需要六个数据降低到三个数据，从二维降维到一维。</p>
+<h4 id="数学原理">1.1.1 数学原理</h4>
+<p>详细见张洋发布于
+2013-06-22的博客内容，因原网址失效，个人进行拷贝修复，详细如下：</p>
+<h4 id="直接pod方法">1.1.2 直接POD方法</h4>
+<p>处理数据量过小，基本不使用</p>
+<h4 id="快照podsnapshots-pod">1.1.3 快照POD(Snapshots POD)</h4>
+<h4 id="基于svd的pod方法">1.1.4 基于SVD的POD方法</h4>
+<h3 id="基于机器学习的自编码器">1.2基于机器学习的自编码器</h3>
+<h2 id="二">二、</h2>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a
+target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享
+4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+
+    <section id="share">
+      <div class="header"><span>Share</span></div>
+      <div class="body">
+        <div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://otreatly.github.io/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/" /></div>
+        <div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot;)"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/b32ef3da1162a.svg" /></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://otreatly.github.io/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/&title= - 白船长的博客&summary=知识点分析
+1. 降阶模型(reduced-order
+model,ROM)
+1.1
+本征正交分解(proper orthogonal decomposition,POD)
+本征正交分解（Proper Orthogonal ..."><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/80c07e4dbb303.svg" /></a><a class="social share-item email" href="mailto:?subject= - 白船长的博客&amp;body=https://otreatly.github.io/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/a1b00e20f425d.svg" /></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;Copied!&quot;)"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/8411ed322ced6.svg" /></a></div>
+        
+        <div class="qrcode" id="qrcode-wechat" style="opacity:0;height:0">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://otreatly.github.io/2025/07/29/Machine%20Learning%20With%20Data%20Assimilation%20and%20Uncertainty%20Quantification%20for%20Dynamical%20Systems%20A%20Review/"/>
+        </div>
+        
+      </div>
+    </section>
+    </div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">Older</div><a href="/2025/07/29/PCA%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/">2025-07-29</a></div></section></div>
+
+
+
+
+  <div class="related-wrap md-text" id="comments">
+    <section class='header cmt-title cap theme'>
+      <p>快来参与讨论吧~</p>
+
+    </section>
+    <section class='body cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align:middle;fill:currentColor;overflow:hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="otreatly+/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </section>
+  </div>
+
+
+
 <footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Captain White</a> 使用 <a
 target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar
 1.33.1</a> 主题创建。 本博客所有文章除特别声明外，均采用 <a
@@ -191,7 +274,14 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel'>
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%E5%88%86%E6%9E%90"><span class="toc-text">知识点分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%8D%E9%98%B6%E6%A8%A1%E5%9E%8Breduced-order-modelrom"><span class="toc-text">1. 降阶模型(reduced-order
+model,ROM)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3proper-orthogonal-decompositionpod"><span class="toc-text">1.1
+本征正交分解(proper orthogonal decomposition,POD)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86"><span class="toc-text">1.1.1 数学原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5pod%E6%96%B9%E6%B3%95"><span class="toc-text">1.1.2 直接POD方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%AB%E7%85%A7podsnapshots-pod"><span class="toc-text">1.1.3 快照POD(Snapshots POD)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Esvd%E7%9A%84pod%E6%96%B9%E6%B3%95"><span class="toc-text">1.1.4 基于SVD的POD方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-text">1.2基于机器学习的自编码器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C"><span class="toc-text">二、</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>Join Discussion</span></a></div></widget>
+</div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
@@ -685,6 +775,31 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 
 
 <!-- optional -->
+
+  <script type="module">
+  const el = document.querySelector('#comments #beaudar');
+  util.viewportLazyload(el, load_beaudar, false);
+
+  function load_beaudar() {
+    if (!el) return;
+    try {
+      el.innerHTML = '';
+    } catch (error) {
+      console.error(error);
+    }
+    const script = document.createElement('script');
+    script.src = 'https://beaudar.lipk.org/client.js';
+    script.async = true;
+    for (const key of Object.keys(el.attributes)) {
+      const attr = el.attributes[key];
+      if (['class', 'id'].includes(attr.name) === false) {
+        script.setAttribute(attr.name, attr.value);
+      }
+    }
+    el.appendChild(script);
+  }
+</script>
+
 
 
 
