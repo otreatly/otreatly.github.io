@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
 <meta property="article:published_time" content="2025-07-30T02:00:51.774Z">
-<meta property="article:modified_time" content="2025-07-30T14:56:43.778Z">
+<meta property="article:modified_time" content="2025-07-30T15:14:53.822Z">
 <meta property="article:author" content="Captain White">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
@@ -48,7 +48,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"dateCreated":"2025-07-30T10:00:51+08:00","dateModified":"2025-07-30T22:56:43+08:00","datePublished":"2025-07-30T10:00:51+08:00","description":"","headline":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://otreatly.github.io/2025/07/30/Dropout/"},"publisher":{"@type":"Organization","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4","logo":{"@type":"ImageObject","url":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"}},"url":"https://otreatly.github.io/2025/07/30/Dropout/","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"dateCreated":"2025-07-30T10:00:51+08:00","dateModified":"2025-07-30T23:14:53+08:00","datePublished":"2025-07-30T10:00:51+08:00","description":"","headline":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://otreatly.github.io/2025/07/30/Dropout/"},"publisher":{"@type":"Organization","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4","logo":{"@type":"ImageObject","url":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"}},"url":"https://otreatly.github.io/2025/07/30/Dropout/","image":[]}</script>
   
 <style>mjx-container[jax="SVG"] {
   direction: ltr;
@@ -192,17 +192,14 @@ mjx-container[display="true"] + br {
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-07-30T02:00:51.774Z">2025-07-30</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-07-30T14:56:43.778Z">2025-07-30</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-07-30T02:00:51.774Z">2025-07-30</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-07-30T15:14:53.822Z">2025-07-30</time></span></div></div></div>
     
   </div>
   </div><article class="md-text content"><h2 id="前言">前言</h2>
 <p>深度神经网络包含多个非线性隐藏层，这使得它们有强大的表现力，可以学习输入和输出之间非常复杂的关系。但是在训练数据有限的情况下，深度神经网络很容易过度学习造成过拟合，过拟合是深度神经网络的一个非常严重的问题，此外，神经网络越大，训练速度越慢，Dropout可以通过在训练神经网络期间按照一定的概率将神经网络单元<strong>暂时</strong>从网络中丢弃来防止过拟合。注意是暂时，对于随机梯度下降来说，由于是随机丢弃，故而每一个mini-batch都在训练不同的网络。实验证明Dropout有很好的效果。</p>
 <h2 id="dropout简介">1. Dropout简介</h2>
 <h3 id="图解">1.1 图解</h3>
-<figure>
-<img src="https://github.com/otreatly/image/blob/main/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/dropout1.png?raw=ture" alt="fig1">
-<figcaption aria-hidden="true">fig1</figcaption>
-</figure>
+<p><img src="https://github.com/otreatly/image/blob/main/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/dropout1.png?raw=ture"></p>
 <p>左图(a)：拥有两层隐藏层的正常升级网络；右图(b)：应用Dropout后的神经网络；源自<a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.5555/2627435.2670313">官方论文</a></p>
 <h3 id="dropout产生动机">1.2 Dropout产生动机</h3>
 <p>官方论文中就dropout的动机做了一个类比案例，以一次恐怖袭击为例，使用下述两种方式：</p>
@@ -237,10 +234,7 @@ batch都在训练不同的网络。
 <p><strong>f</strong>： 激活函数；</p>
 <h3 id="训练层">2.1 训练层</h3>
 <p>在训练网络每一个单元上都加上一道概率流程，从而实现随机删除神经元操作。</p>
-<figure>
-<img src="https://github.com/otreatly/image/blob/main/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/dropout2.png?raw=ture" alt="fig2">
-<figcaption aria-hidden="true">fig2</figcaption>
-</figure>
+<p><img src="https://github.com/otreatly/image/blob/main/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/dropout2.png?raw=ture"></p>
 <p>详细计算变化如下所示：</p>
 <ul>
 <li><p>原始神经网络前向传播计算公式 <span class="math display"><em>z</em><sub><em>i</em></sub><sup>(<em>l</em> + 1)</sup> = <em>w</em><sub><em>i</em></sub><sup>(<em>l</em> + 1)</sup><em>y</em><sup><em>l</em></sup> + <em>b</em><sub><em>i</em></sub><sup>(<em>l</em> + 1)</sup>,</span></p>
@@ -255,10 +249,7 @@ rate=0.5，经由下式计算处rescale
 rate=2，从而一定程度上弥补删掉神经元带来的误差 <span class="math display"><em>r</em><em>e</em><em>s</em><em>c</em><em>a</em><em>l</em><em>e</em>_<em>r</em><em>a</em><em>t</em><em>e</em> = 1/(1 − <em>d</em><em>r</em><em>o</em><em>p</em><em>o</em><em>u</em><em>t</em>_<em>r</em><em>a</em><em>t</em><em>e</em>)</span></p>
 <h3 id="测试层">2.2 测试层</h3>
 <p>预测模型时，每一个神经单元的权重参数都要乘以概率p</p>
-<figure>
-<img src="https://github.com/otreatly/image/blob/main/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/dropout3.png?raw=ture" alt="fig3">
-<figcaption aria-hidden="true">fig3</figcaption>
-</figure>
+<p><img src="https://github.com/otreatly/image/blob/main/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/dropout3.png?raw=ture"></p>
 <p>其公式为： <span class="math display"><em>w</em><sup>(<em>l</em>)</sup> = <em>p</em><em>W</em><sup><em>l</em></sup></span>
 权重参数被概率缩放</p>
 <h3 id="数学原理">2.3数学原理</h3>
