@@ -17,19 +17,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>数据同化与不确定量化: Vector Quantized Variational Autoencoders - 白船长的博客</title>
+  <title>数据同化与不确定量化: 矢量量化变分自编码器 - 白船长的博客</title>
 
   
     <meta name="description" content="前言 VQ-VAE更专注于离散表示，这在许多模态中更为自然。如，语言本质上时离散的，语言通常表示为一系列符号，而图像可以由语言来描述，此外，离散表示符合复杂的推理、规划和预测学习。VQ-VAE通过一种新颖的后验分布参数化，成功地把变分自编码器框架与离散潜在表示结合，该模型更依赖于矢量量化（VQ），易于训练，没有大的方差问题，从而避免了许多强大解码器的VAE模型常见的“后验坍塌”问题。 离散隐变">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vector Quantized Variational Autoencoders">
+<meta property="og:title" content="矢量量化变分自编码器">
 <meta property="og:url" content="https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/">
 <meta property="og:site_name" content="白船长的博客">
 <meta property="og:description" content="前言 VQ-VAE更专注于离散表示，这在许多模态中更为自然。如，语言本质上时离散的，语言通常表示为一系列符号，而图像可以由语言来描述，此外，离散表示符合复杂的推理、规划和预测学习。VQ-VAE通过一种新颖的后验分布参数化，成功地把变分自编码器框架与离散潜在表示结合，该模型更依赖于矢量量化（VQ），易于训练，没有大的方差问题，从而避免了许多强大解码器的VAE模型常见的“后验坍塌”问题。 离散隐变">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
-<meta property="article:published_time" content="2025-08-02T14:38:58.539Z">
-<meta property="article:modified_time" content="2025-08-02T14:38:58.539Z">
+<meta property="article:published_time" content="2025-08-02T14:41:54.509Z">
+<meta property="article:modified_time" content="2025-08-02T14:41:54.509Z">
 <meta property="article:author" content="Captain White">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
@@ -48,7 +48,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"Vector Quantized Variational Autoencoders","description":"前言\r\nVQ-VAE更专注于离散表示，这在许多模态中更为自然。如，语言本质上时离散的，语言通常表示为一系列符号，而图像可以由语言来描述，此外，离散表示符合复杂的推理、规划和预测学习。VQ-VAE通过一种新颖的后验分布参数化，成功地把变分自编码器框架与离散潜在表示结合，该模型更依赖于矢量量化（VQ），易于训练，没有大的方差问题，从而避免了许多强大解码器的VAE模型常见的“后验坍塌”问题。\r\n离...","url":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"矢量量化变分自编码器","description":"前言\r\nVQ-VAE更专注于离散表示，这在许多模态中更为自然。如，语言本质上时离散的，语言通常表示为一系列符号，而图像可以由语言来描述，此外，离散表示符合复杂的推理、规划和预测学习。VQ-VAE通过一种新颖的后验分布参数化，成功地把变分自编码器框架与离散潜在表示结合，该模型更依赖于矢量量化（VQ），易于训练，没有大的方差问题，从而避免了许多强大解码器的VAE模型常见的“后验坍塌”问题。\r\n离...","url":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/"}</script>
   
 <style>mjx-container[jax="SVG"] {
   direction: ltr;
@@ -184,7 +184,7 @@ mjx-container[display="true"] + br {
 
 
 
-<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/"><span class="title"><strong>数据同化与不确定量化</strong><span class="dot"></span>Vector Quantized Variational Autoencoders</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>本征正交分解</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/PCA%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>PCA的数学原理</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%8F%98%E5%88%86%E4%B8%8B%E7%95%8C(ELBO)%E6%8E%A8%E5%AF%BC/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>变分下界(ELBO)推导</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%B9%BF%E4%B9%89%E6%9C%AC%E5%BE%81%E5%88%86%E8%A7%A3/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>广义本征分解</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E7%AE%80%E5%8D%95%E8%AF%81%E6%98%8E/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>重参数化简单证明</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Autoencoder/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>Variational Autoencoder</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>自编码器前言</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Convolutional%20Autoencoder/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>Convolutional AutoenCoder</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Dropout/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>DropOut</span></a></div></widget>
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/"><span class="title"><strong>数据同化与不确定量化</strong><span class="dot"></span>矢量量化变分自编码器</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>本征正交分解</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/PCA%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>PCA的数学原理</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%8F%98%E5%88%86%E4%B8%8B%E7%95%8C(ELBO)%E6%8E%A8%E5%AF%BC/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>变分下界(ELBO)推导</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%B9%BF%E4%B9%89%E6%9C%AC%E5%BE%81%E5%88%86%E8%A7%A3/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>广义本征分解</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E7%AE%80%E5%8D%95%E8%AF%81%E6%98%8E/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>重参数化简单证明</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Autoencoder/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>Variational Autoencoder</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>自编码器前言</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Convolutional%20Autoencoder/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>Convolutional AutoenCoder</span></a><a class="item title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Dropout/"><span class="title"><strong>数据同化与不确定性量化</strong><span class="dot"></span>DropOut</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/otreatly" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://cdn.mousebomb.org/blog/github-142-svgrepo-com.svg"/></a><a class="social" href="https://space.bilibili.com/276588305?spm_id_from=333.1007.0.0" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://s1.aigei.com/src/img/png/64/64517927d75d4c4d940cc31053cf6d42.png?imageMogr2/auto-orient/thumbnail/!282x282r/gravity/Center/crop/282x282/quality/85/%7CimageView2/2/w/282&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:X1PbTTLqipc3GxmvsRT_TvvF8Qs="/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/942ebbf1a4b91.svg"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -198,14 +198,14 @@ mjx-container[display="true"] + br {
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
 
   <span class="sep"></span>
-  <a class="cap breadcrumb" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/">Vector Quantized Variational Autoencoders</a>
+  <a class="cap breadcrumb" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Vector%20Quantized%20Variational%20Autoencoders/">矢量量化变分自编码器</a>
   </div>
-<div class="flex-row" id="post-meta"><span class="text created">Updated on: <time datetime="2025-08-02T14:38:58.539Z">2025-08-02</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">Updated on: <time datetime="2025-08-02T14:41:54.509Z">2025-08-02</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>Vector Quantized Variational Autoencoders</span></h1>
+        <h1 class="text title"><span>矢量量化变分自编码器</span></h1>
         
       </div>
     </div>
@@ -251,6 +251,26 @@ mjx-container[display="true"] + br {
 <p>离散潜变量<span class="math inline"><em>z</em></span>上的先验分布<span class="math inline"><em>p</em>(<em>z</em>)</span>是一个分类分布，可以通过依赖特征映射中的其他<span class="math inline"><em>z</em></span>来使其成为自回归。在训练VQ-VAE期间，先验保持恒定且均匀。训练完成后，作者拟合了一个自回归分布<span class="math inline"><em>p</em>(<em>z</em>)</span>，以便通过祖先采样生成<span class="math inline"><em>x</em></span>。对于图像，使用PixelCNN来处理离散潜变量；对于原始音频，使用WaveNet。</p>
 </article>
 <div class="article-footer">
+    <section id="references">
+      <div class="header"><span>References</span></div>
+      <div class="body">
+        <ul>
+        <li class="post-title">
+          <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1711.00937">Neural Discrete
+Representation Learning</a></p>
+
+        </li>
+        
+        <li class="post-title">
+          <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/684456268">VQ-VAE:Neural
+Discrete Representation Learning 全文解读 - APlayBoy的文章 -
+知乎</a></p>
+
+        </li>
+        </ul>
+      </div>
+    </section>
+    
 
 </div>
 
