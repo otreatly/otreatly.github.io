@@ -1,0 +1,2945 @@
+
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>数据同化与不确定性量化: K-近邻算法 - 白船长的博客</title>
+
+  
+    <meta name="description" content="前言 KNN是一个简单的监督学习分类算法，需要有标签的训练数据，通过对新样本距离最近的k个训练样本点，按照分类决策规则决定新样本的类别。于1968年由Cover和Hart提出。 简介 KNN主要有三个要点：  确定距离度量； k值选择 分类决策规则    在分类任务中可使用“投票法”，即选择k个实例中出现最多的标记类别作为预测结果； 在回归任务中可使用“平均法”，即将k个实">
+<meta property="og:type" content="website">
+<meta property="og:title" content="K-近邻算法">
+<meta property="og:url" content="https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/K-Nearest%20Neighbours/">
+<meta property="og:site_name" content="白船长的博客">
+<meta property="og:description" content="前言 KNN是一个简单的监督学习分类算法，需要有标签的训练数据，通过对新样本距离最近的k个训练样本点，按照分类决策规则决定新样本的类别。于1968年由Cover和Hart提出。 简介 KNN主要有三个要点：  确定距离度量； k值选择 分类决策规则    在分类任务中可使用“投票法”，即选择k个实例中出现最多的标记类别作为预测结果； 在回归任务中可使用“平均法”，即将k个实">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
+<meta property="article:published_time" content="2025-08-03T15:04:30.942Z">
+<meta property="article:modified_time" content="2025-08-03T15:01:37.307Z">
+<meta property="article:author" content="Captain White">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/K-Nearest%20Neighbours/","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"K-近邻算法","description":"前言\r\nKNN是一个简单的监督学习分类算法，需要有标签的训练数据，通过对新样本距离最近的k个训练样本点，按照分类决策规则决定新样本的类别。于1968年由Cover和Hart提出。\r\n简介\r\nKNN主要有三个要点：\r\n\r\n确定距离度量；\r\nk值选择\r\n分类决策规则\r\n\r\n\r\n\r\n在分类任务中可使用“投票法”，即选择k个实例中出现最多的标记类别作为预测结果；\r\n在回归任务中可使用“平均法”，即将...","url":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/K-Nearest%20Neighbours/"}</script>
+  
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+<body>
+
+
+
+<div class="l_body content" id="start" layout="page" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><div class="icon"><img no-lazy class="icon" src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2779789.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><a class="title" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3"><div class="main">数据同化与不确定性量化</div><div class="sub normal cap">不积硅步无以至千里</div><div class="sub hover cap" style="opacity:0"> Designed by xiaoshuai</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item active" title="知识点专栏" href="/wiki/" style="color:#3DC550"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.936.936 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.958.958 0 0 0 .783-.073a.936.936 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031c.113-.005.224-.01.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371c.184-.107.377-.216.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"/><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8.2 8.2 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.13 1.13 0 0 1 .492-.13c.047 0 .094.004.138.01c.175.029.315.1.354.12l.009.005l.749.356V3.647z"/><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"/><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"/></svg></a><a class="nav-item" title="探索" href="/explore/" style="color:#FA6400"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a><a class="nav-item" title="书评" href="/bookmark/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" data-filter="/wiki/数据同化与不确定性量化/" placeholder="在专栏中搜索..."></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+<widget class="widget-wrapper doc-tree post-list"><div class="widget-header dis-select"><span class="name">基于投影的降阶模型</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3/#start"><span class="toc-text">本征正交分解</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%B9%BF%E4%B9%89%E6%9C%AC%E5%BE%81%E5%88%86%E8%A7%A3/"><span class="toc-text">广义本征分解</span></a></div><div class="widget-header dis-select"><span class="name">基于机器学习的降阶模型发展历程</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/"><span class="toc-text">自编码器前言</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Autoencoder/"><span class="toc-text">Variational Autoencoder</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Convolutional%20Autoencoder/"><span class="toc-text">卷积自编码器(CAE)</span></a></div><div class="widget-header dis-select"><span class="name">相关数学原理与推导</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Dropout/"><span class="toc-text">DropOut</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%8F%98%E5%88%86%E4%B8%8B%E7%95%8C(ELBO)%E6%8E%A8%E5%AF%BC/"><span class="toc-text">变分下界(ELBO)推导</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E7%AE%80%E5%8D%95%E8%AF%81%E6%98%8E/"><span class="toc-text">重参数化简单证明</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/PCA%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/"><span class="toc-text">PCA的数学原理</span></a></div><div class="widget-header dis-select"><span class="name">拓展</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Posterior%20Collapse/"><span class="toc-text">后验坍塌</span></a><a class="link active" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/K-Nearest%20Neighbours/"><span class="toc-text">K-近邻算法</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div></widget>
+
+
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/otreatly" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://cdn.mousebomb.org/blog/github-142-svgrepo-com.svg"/></a><a class="social" href="https://space.bilibili.com/276588305?spm_id_from=333.1007.0.0" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://s1.aigei.com/src/img/png/64/64517927d75d4c4d940cc31053cf6d42.png?imageMogr2/auto-orient/thumbnail/!282x282r/gravity/Center/crop/282x282/quality/85/%7CimageView2/2/w/282&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:X1PbTTLqipc3GxmvsRT_TvvF8Qs="/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a><a class="social" href="https://" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/942ebbf1a4b91.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">Wiki</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3/">数据同化与不确定性量化</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Updated on: <time datetime="2025-08-03T15:01:37.307Z">2025-08-03</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>K-近邻算法</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="前言">前言</h2>
+<p>KNN是一个简单的监督学习分类算法，需要有标签的训练数据，通过对新样本距离最近的k个训练样本点，按照分类决策规则决定新样本的类别。于1968年由Cover和Hart提出。</p>
+<h2 id="简介">简介</h2>
+<p>KNN主要有三个要点：</p>
+<ul>
+<li>确定距离度量；</li>
+<li>k值选择</li>
+<li>分类决策规则</li>
+</ul>
+<blockquote>
+<ul>
+<li>在<strong>分类</strong>任务中可使用“投票法”，即选择k个实例中出现最多的标记类别作为预测结果；</li>
+<li>在<strong>回归</strong>任务中可使用“平均法”，即将k个实例的实值输出标记的平均值作为预测结果；</li>
+<li>还可基于距离远近使用<strong>加权平均或加权投票</strong>，距离越近的实例权重越大。</li>
+</ul>
+</blockquote>
+<h2 id="距离度量">距离度量</h2>
+<p>特征空间中的两个实例点的距离是两个实例点相似程度的反映。K近邻法的特征空间一般是n维实数向量空间<span class="math inline"><em>R</em><sub><em>n</em></sub></span>。度量的距离是其他<span class="math inline"><em>L</em><sub><em>p</em></sub></span>范式距离，一般为欧式距离:
+<span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -2.75ex;" xmlns="http://www.w3.org/2000/svg" width="30.779ex" height="6.285ex" role="img" focusable="false" viewBox="0 -1562.5 13604.3 2778.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mi" transform="translate(714,-150) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g><g data-mml-node="mo" transform="translate(1119.7,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(1508.7,0)"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(2407.6,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(2852.3,0)"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g><g data-mml-node="mo" transform="translate(3798.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(4465.4,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mo" transform="translate(5521.2,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="munderover" transform="translate(5910.2,0)"><g data-mml-node="mo"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="mi" transform="translate(616.6,-1107.7) scale(0.707)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mi" transform="translate(509.9,1150) scale(0.707)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(7520.8,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="msubsup" transform="translate(7798.8,0)"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="TeXAtom" transform="translate(605,530.4) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(389,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mo" transform="translate(687,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><g data-mml-node="mi" transform="translate(605,-293.8) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(9436.9,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="msubsup" transform="translate(10437.1,0)"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="TeXAtom" transform="translate(605,530.4) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(389,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mo" transform="translate(687,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><g data-mml-node="mi" transform="translate(605,-293.8) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g><g data-mml-node="msup" transform="translate(11853,0)"><g data-mml-node="mo" transform="translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mi" transform="translate(311,413) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g><g data-mml-node="msup" transform="translate(12569.7,0)"><g data-mml-node="mo"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="TeXAtom" transform="translate(422,451.5) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(221.1,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mi" transform="translate(220,-345) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><rect width="555.7" height="60" x="120" y="220"></rect></g></g></g></g></g></svg></mjx-container></span> 其中，<span class="math inline"><em>p</em> ≥ 1</span>。</p>
+<blockquote>
+<ul>
+<li><span class="math inline"><em>p</em> = 1</span>时，称为曼哈顿距离（Manhattan
+distance）</li>
+<li><span class="math inline"><em>p</em> = 2</span>时，成为欧式距离（Euclidean
+distance）</li>
+<li><span class="math inline"><em>p</em> = ∞</span>时，它到各个坐标轴的距离为最大值</li>
+</ul>
+<p>fig knn1</p>
+</blockquote>
+<h2 id="k值选择">k值选择</h2>
+<p>常用方法：</p>
+<ol type="1">
+<li>从<span class="math inline"><em>k</em> = 1</span>开始，使用检验集估计分类器的误差率；</li>
+<li>重复该过程，但k每次加1,允许增加一个近邻；</li>
+<li>选取产生最小误差率的k值；</li>
+</ol>
+<blockquote>
+<ul>
+<li>一般k的取值不超过20,上限是n的开方，随着数据集的增大，k值也对应增大；</li>
+<li>一般k选取较小的值，并采用交叉验证法选择最优的k值；</li>
+<li>经验规则：k一般低于训练样本的平方根；</li>
+</ul>
+</blockquote>
+<p>说明：</p>
+<ol type="1">
+<li>过小的k值模型中，输入样本点会对近邻训练样本点十分敏感，如果引入噪声，则会导致预测出错。对噪声的低容忍性使得模型变得过拟合；</li>
+<li>过大的k值模型，就相当于选择了范围更大的领域内的点作为决策依据，可以降低估计误差，但领域内的其他类别的样本点也会对该输入样本点的预测产生影响；</li>
+<li>如果<span class="math inline"><em>k</em> = <em>N</em></span>，N为所有样本点，那么KNN模型每次都会选取训练数据中数量最多的类别作为预测类别，训练数据中的信息将不会被利用；</li>
+</ol>
+<h2 id="分类决策规则">分类决策规则</h2>
+<p>一般来说，KNN的分类决策规则就是对输入新本的<strong>邻域</strong>内所有样本进行统计树木，领域是以新输入样本为中心，离新样本点距离最近的k个点所构成的区域。根据<span class="math inline"><em>k</em></span>值决定的邻域，我们可以计算出新样本<span class="math inline"><em>x</em><sup>*</sup>, <em>y</em><sup>*</sup></span>在k值为<span class="math inline"><em>k</em><sup>*</sup></span>的KNN模型上的预测为第<span class="math inline"><em>c</em></span>类的概率： <span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -2.697ex;" xmlns="http://www.w3.org/2000/svg" width="34.02ex" height="6.618ex" role="img" focusable="false" viewBox="0 -1733 15036.8 2925.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(503,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msup" transform="translate(892,0)"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(523,413) scale(0.707)"><path data-c="2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path></g></g><g data-mml-node="mo" transform="translate(2096.3,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(3152.1,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mo" transform="translate(3585.1,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="msup" transform="translate(3863.1,0)"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(605,413) scale(0.707)"><path data-c="2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path></g></g><g data-mml-node="mo" transform="translate(4871.7,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msup" transform="translate(5316.3,0)"><g data-mml-node="mi"><path data-c="1D458" d="M121 647Q121 657 125 670T137 683Q138 683 209 688T282 694Q294 694 294 686Q294 679 244 477Q194 279 194 272Q213 282 223 291Q247 309 292 354T362 415Q402 442 438 442Q468 442 485 423T503 369Q503 344 496 327T477 302T456 291T438 288Q418 288 406 299T394 328Q394 353 410 369T442 390L458 393Q446 405 434 405H430Q398 402 367 380T294 316T228 255Q230 254 243 252T267 246T293 238T320 224T342 206T359 180T365 147Q365 130 360 106T354 66Q354 26 381 26Q429 26 459 145Q461 153 479 153H483Q499 153 499 144Q499 139 496 130Q455 -11 378 -11Q333 -11 305 15T277 90Q277 108 280 121T283 145Q283 167 269 183T234 206T200 217T182 220H180Q168 178 159 139T145 81T136 44T129 20T122 7T111 -2Q98 -11 83 -11Q66 -11 57 -1T48 16Q48 26 85 176T158 471L195 616Q196 629 188 632T149 637H144Q134 637 131 637T124 640T121 647Z"></path></g><g data-mml-node="mo" transform="translate(554,413) scale(0.707)"><path data-c="2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path></g></g><g data-mml-node="mo" transform="translate(6273.9,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(6940.7,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mfrac" transform="translate(7996.4,0)"><g data-mml-node="mn" transform="translate(448.8,676)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="msup" transform="translate(220,-686)"><g data-mml-node="mi"><path data-c="1D458" d="M121 647Q121 657 125 670T137 683Q138 683 209 688T282 694Q294 694 294 686Q294 679 244 477Q194 279 194 272Q213 282 223 291Q247 309 292 354T362 415Q402 442 438 442Q468 442 485 423T503 369Q503 344 496 327T477 302T456 291T438 288Q418 288 406 299T394 328Q394 353 410 369T442 390L458 393Q446 405 434 405H430Q398 402 367 380T294 316T228 255Q230 254 243 252T267 246T293 238T320 224T342 206T359 180T365 147Q365 130 360 106T354 66Q354 26 381 26Q429 26 459 145Q461 153 479 153H483Q499 153 499 144Q499 139 496 130Q455 -11 378 -11Q333 -11 305 15T277 90Q277 108 280 121T283 145Q283 167 269 183T234 206T200 217T182 220H180Q168 178 159 139T145 81T136 44T129 20T122 7T111 -2Q98 -11 83 -11Q66 -11 57 -1T48 16Q48 26 85 176T158 471L195 616Q196 629 188 632T149 637H144Q134 637 131 637T124 640T121 647Z"></path></g><g data-mml-node="mo" transform="translate(554,289) scale(0.707)"><path data-c="2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path></g></g><rect width="1157.6" height="60" x="120" y="220"></rect></g><g data-mml-node="munderover" transform="translate(9560.7,0)"><g data-mml-node="mo"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="mi" transform="translate(600,-1084.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(408,1150) scale(0.707)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g></g><g data-mml-node="mi" transform="translate(11171.3,0)"><path data-c="1D43C" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path></g><g data-mml-node="mo" transform="translate(11675.3,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(12064.3,0)"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(523,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(13159.1,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(14214.8,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mo" transform="translate(14647.8,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></span> 其中<span class="math inline"><em>N</em></span>为邻域内训练样本点的总数目，<span class="math inline"><em>I</em>(<em>y</em><sub><em>i</em></sub> = <em>c</em>)</span>是一个指数函数，括号内为真时取1,否则取0。</p>
+<p>KNN模型的多数表决规则属于经验风险最小化的策略，因此KNN模型的误分类率为：
+<span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -2.697ex;" xmlns="http://www.w3.org/2000/svg" width="18.838ex" height="6.618ex" role="img" focusable="false" viewBox="0 -1733 8326.3 2925.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mfrac" transform="translate(1722.4,0)"><g data-mml-node="mn" transform="translate(230.5,676)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mi" transform="translate(220,-686)"><path data-c="1D458" d="M121 647Q121 657 125 670T137 683Q138 683 209 688T282 694Q294 694 294 686Q294 679 244 477Q194 279 194 272Q213 282 223 291Q247 309 292 354T362 415Q402 442 438 442Q468 442 485 423T503 369Q503 344 496 327T477 302T456 291T438 288Q418 288 406 299T394 328Q394 353 410 369T442 390L458 393Q446 405 434 405H430Q398 402 367 380T294 316T228 255Q230 254 243 252T267 246T293 238T320 224T342 206T359 180T365 147Q365 130 360 106T354 66Q354 26 381 26Q429 26 459 145Q461 153 479 153H483Q499 153 499 144Q499 139 496 130Q455 -11 378 -11Q333 -11 305 15T277 90Q277 108 280 121T283 145Q283 167 269 183T234 206T200 217T182 220H180Q168 178 159 139T145 81T136 44T129 20T122 7T111 -2Q98 -11 83 -11Q66 -11 57 -1T48 16Q48 26 85 176T158 471L195 616Q196 629 188 632T149 637H144Q134 637 131 637T124 640T121 647Z"></path></g><rect width="721" height="60" x="120" y="220"></rect></g><g data-mml-node="munderover" transform="translate(2850.1,0)"><g data-mml-node="mo"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="mi" transform="translate(600,-1084.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(408,1150) scale(0.707)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g></g><g data-mml-node="mi" transform="translate(4460.8,0)"><path data-c="1D43C" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path></g><g data-mml-node="mo" transform="translate(4964.8,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(5353.8,0)"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(523,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(6448.5,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(7504.3,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mo" transform="translate(7937.3,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></span></p>
+<h2 id="算法实现">算法实现</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createDataSet</span>():</span><br><span class="line">    <span class="comment"># 创建训练集</span></span><br><span class="line">    group = array([[<span class="number">1.0</span>,<span class="number">1.1</span>],[<span class="number">1.0</span>,<span class="number">1.0</span>],[<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0.1</span>]])</span><br><span class="line">    labels = [<span class="string">'A'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'B'</span>]</span><br><span class="line">    <span class="keyword">return</span> group, labels</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">classify0</span>(<span class="params">inX, dataSet, labels, k</span>):</span><br><span class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 根据欧式距离计算训练集中每个样本到测试点的距离</span></span><br><span class="line">    diffMat = tile(inX, (dataSetSize,<span class="number">1</span>)) - dataSet</span><br><span class="line">    sqDiffMat = diffMat**<span class="number">2</span></span><br><span class="line">    sqDistances = sqDiffMat.<span class="built_in">sum</span>(axis=<span class="number">1</span>)</span><br><span class="line">    distances = sqDistances**<span class="number">0.5</span></span><br><span class="line">    <span class="comment"># 计算完所有点的距离后，对数据按照从小到大的次序排序</span></span><br><span class="line">    sortedDistIndicies = distances.argsort()</span><br><span class="line">    <span class="comment"># 确定前k个距离最小的元素所在的主要分类，最后返回发生频率最高的元素类别</span></span><br><span class="line">    classCount={}</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">        voteIlabel = labels[sortedDistIndicies[i]]</span><br><span class="line">        classCount[voteIlabel] = classCount.get(voteIlabel,<span class="number">0</span>) + <span class="number">1</span></span><br><span class="line">    sortedClassCount = <span class="built_in">sorted</span>(classCount.iteritems(), key=operator.itemgetter(<span class="number">1</span>), reverse=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其中group和labels为训练集，group为特征向量，labels为类别。</p>
+</blockquote>
+<p>也可以使用sklearn库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">X = [[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]]</span><br><span class="line">y = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">neigh = KNeighborsClassifier(n_neighbors= <span class="number">3</span>, weights = <span class="string">'uniform'</span>, algorithm = <span class="string">'auto'</span>) <span class="comment"># 设置最近的3个邻居作为分类的依据</span></span><br><span class="line">neigh.fit(X, y) <span class="comment"># 调用fit()函数，将训练数据X和标签y送入分类器进行学习</span></span><br><span class="line"></span><br><span class="line">text = [[<span class="number">1.1</span>], [<span class="number">2.1</span>]] </span><br><span class="line">data = neigh.predict(text)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br><span class="line"><span class="built_in">print</span>(neigh.score(X, y)) <span class="comment">#返回评分</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>训练结果： [0 1] 训练结果评分： 1.0</p>
+</blockquote>
+<h2 id="优劣">优劣</h2>
+<p>KNN的主要优点有：</p>
+<ol type="1">
+<li>理论成熟，思想简单，既可以用来做分类也可以用来做回归</li>
+<li>可用于非线性分类</li>
+<li>训练时间复杂度比支持向量机之类的算法低，仅为O(n)</li>
+<li>和朴素贝叶斯之类的算法比，对数据没有假设，准确度高，对异常点不敏感</li>
+<li>由于KNN方法主要靠周围有限的邻近的样本，而不是靠判别类域的方法来确定所属类别的，因此对于类域的交叉或重叠较多的待分样本集来说，KNN方法较其他方法更为适合</li>
+<li>该算法比较适用于样本容量比较大的类域的自动分类，而那些样本容量较小的类域采用这种算法比较容易产生误分</li>
+</ol>
+<p>KNN的不足：</p>
+<ol type="1">
+<li><p>计算量大，分类速度慢</p></li>
+<li><p>KNN在对属性较多的训练样本进行分类时，由于计算量大而使其效率大大降低效果。懒惰算法，对测试样本分类时的计算量大，内存开销大，评分慢</p></li>
+<li><p><strong>K值</strong>难以确定 </p>
+<p>目前没有很好的方法，一般采用先定一个初始值，然后根据实验测试的结果调整K值。</p></li>
+<li><p>对<strong>不平衡样本集比较敏感</strong></p>
+<p>当样本不平衡时，如一个类的样本容量很大，而其他类样本容量很小时，有可能导致当输入一个新样本时，该样本的K个邻居中大容量类的样本占多数。改进：采用权值的方法（增大距离小的邻居样本的权值）</p></li>
+</ol>
+</article>
+<div class="article-footer">
+    <section id="references">
+      <div class="header"><span>References</span></div>
+      <div class="body">
+        <ul>
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>[</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>李</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>航</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>《</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>统</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>计</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>学</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>习</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>方</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>法</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>》</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>]</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>:</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>w</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>w</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>w</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>b</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>j</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>g</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>_</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>b</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>k</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>2</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>6</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>[</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>机</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>器</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>学</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>习</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>k</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>邻</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>近</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>法</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>]</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>:</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>b</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>g</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>2</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>3</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>6</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>2</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>2</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>8</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>[</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>K</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>N</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>N</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>简</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>书</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>]</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>:</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>w</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>w</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>w</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>j</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>m</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>0</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>b</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>8</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>[</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>K</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>N</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>N</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>、</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>K</p>
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>m</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>、</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>模</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>糊</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>均</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>值</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>聚</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>类</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>、</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>D</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>B</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>S</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>C</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>A</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>N</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>与</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>层</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>次</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>与</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>谱</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>聚</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>类</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>算</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>法</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>]</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>:</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>b</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>g</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>q</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>q</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>_</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>3</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>0</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>8</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>2</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>3</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>8</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>6</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>0</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>0</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>6</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>[</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>监</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>督</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>学</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>习</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>分</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>类</p>
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>k</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>近</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>邻</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>算</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>法</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>]</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>:</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>b</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>g</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>q</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>q</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>_</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>0</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>3</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>8</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>0</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>3</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>8</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>6</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        </ul>
+      </div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Prev</div><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Posterior%20Collapse/">后验坍塌</a></div><div class="item" id="next"></div></section></div>
+
+
+  <div class="related-wrap md-text" id="comments">
+    <section class='header cmt-title cap theme'>
+      <p>评论区仅供交流，有问题请提 <a
+target="_blank" rel="noopener" href="https://github.com/otreatly/blog-comments/issues">issue</a>
+反馈。</p>
+
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align:middle;fill:currentColor;overflow:hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" src="https://giscus.app/client.js" data-repo="otreatly/blog-comments" data-repo-id="R_kgDOPOqkeA" data-category="General" data-category-id="DIC_kwDOPOqkeM4Ctq7l" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Captain White</a> 使用 <a
+target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar
+1.33.1</a> 主题创建。 本博客所有文章除特别声明外，均采用 <a
+target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA
+4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E5%BA%A6%E9%87%8F"><span class="toc-text">距离度量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#k%E5%80%BC%E9%80%89%E6%8B%A9"><span class="toc-text">k值选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%99"><span class="toc-text">分类决策规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">算法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8A%A3"><span class="toc-text">优劣</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>Join Discussion</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":[],"codeblock":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+  <script type="module">
+  const el = document.querySelector('#comments #giscus');
+  util.viewportLazyload(el, load_discus, false);
+
+  function load_discus() {
+    if (!el) return;
+    try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.error(error);
+      }
+      const script = document.createElement('script');
+      script.async = true;
+      for (const key of Object.keys(el.attributes)) {
+        const attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+  }
+</script>
+
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
