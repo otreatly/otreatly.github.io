@@ -17,19 +17,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>数据同化与不确定性量化: 自编码器前言 - 白船长的博客</title>
+  <title>数据同化与不确定性量化: 掩码自动编码器 - 白船长的博客</title>
 
   
-    <meta name="description" content="AE基本概念 基于机器学习的降阶模型主要是自编码器（AutoEncoder）,其发展历程图大致如下，出自《Machine Learning With Data Assimilation and Uncertainty Quantification for Dynamical Systems: A Review》：  自动编码器是一种特定类型的自监督神经网络，具有相同的输入和输出。一个典型">
+    <meta name="description" content="前言">
 <meta property="og:type" content="website">
-<meta property="og:title" content="自编码器前言">
-<meta property="og:url" content="https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/">
+<meta property="og:title" content="掩码自动编码器">
+<meta property="og:url" content="https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Masked%20Autoencoders/">
 <meta property="og:site_name" content="白船长的博客">
-<meta property="og:description" content="AE基本概念 基于机器学习的降阶模型主要是自编码器（AutoEncoder）,其发展历程图大致如下，出自《Machine Learning With Data Assimilation and Uncertainty Quantification for Dynamical Systems: A Review》：  自动编码器是一种特定类型的自监督神经网络，具有相同的输入和输出。一个典型">
+<meta property="og:description" content="前言">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
-<meta property="article:published_time" content="2025-08-04T13:27:40.026Z">
-<meta property="article:modified_time" content="2025-08-04T13:27:40.026Z">
+<meta property="article:published_time" content="2025-08-04T13:31:55.172Z">
+<meta property="article:modified_time" content="2025-08-04T12:00:13.094Z">
 <meta property="article:author" content="Captain White">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4">
@@ -48,7 +48,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"自编码器前言","description":"AE基本概念\r\n基于机器学习的降阶模型主要是自编码器（AutoEncoder）,其发展历程图大致如下，出自《Machine Learning\r\nWith Data Assimilation and Uncertainty Quantification for Dynamical\r\nSystems: A Review》：\r\n\r\n自动编码器是一种特定类型的自监督神经网络，具有相同的输入和输出。一...","url":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Masked%20Autoencoders/","author":{"@type":"Person","name":"Captain White","sameAs":[],"image":"https://avatars.githubusercontent.com/u/146962833?s=400&u=05c639b77c25ea9ce0f901580668ab3a92a765af&v=4"},"name":"掩码自动编码器","description":"前言\r\n","url":"https://otreatly.github.io/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Masked%20Autoencoders/"}</script>
   
 <style>mjx-container[jax="SVG"] {
   direction: ltr;
@@ -180,7 +180,7 @@ mjx-container[display="true"] + br {
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" data-filter="/wiki/数据同化与不确定性量化/" placeholder="在专栏中搜索..."></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
 
 
-<widget class="widget-wrapper doc-tree post-list"><div class="widget-header dis-select"><span class="name">基于投影的降阶模型</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3/#start"><span class="toc-text">本征正交分解</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%B9%BF%E4%B9%89%E6%9C%AC%E5%BE%81%E5%88%86%E8%A7%A3/"><span class="toc-text">广义本征分解</span></a></div><div class="widget-header dis-select"><span class="name">基于机器学习的降阶模型发展历程</span></div><div class="widget-body fs14"><a class="link active" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/"><span class="toc-text">自编码器前言</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Autoencoder/"><span class="toc-text">Variational Autoencoder</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Convolutional%20Autoencoder/"><span class="toc-text">卷积自编码器</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Graph%20Auto-Encoders/"><span class="toc-text">图变分自动编码器</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Masked%20Autoencoders/"><span class="toc-text">掩码自动编码器</span></a></div><div class="widget-header dis-select"><span class="name">相关数学原理与推导</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Dropout/"><span class="toc-text">DropOut</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%8F%98%E5%88%86%E4%B8%8B%E7%95%8C(ELBO)%E6%8E%A8%E5%AF%BC/"><span class="toc-text">变分下界(ELBO)推导</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E7%AE%80%E5%8D%95%E8%AF%81%E6%98%8E/"><span class="toc-text">重参数化简单证明</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/PCA%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/"><span class="toc-text">PCA的数学原理</span></a></div><div class="widget-header dis-select"><span class="name">拓展</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Posterior%20Collapse/"><span class="toc-text">后验坍塌</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/K-Nearest%20Neighbours/"><span class="toc-text">K-近邻算法</span></a></div></widget>
+<widget class="widget-wrapper doc-tree post-list"><div class="widget-header dis-select"><span class="name">基于投影的降阶模型</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3/#start"><span class="toc-text">本征正交分解</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%B9%BF%E4%B9%89%E6%9C%AC%E5%BE%81%E5%88%86%E8%A7%A3/"><span class="toc-text">广义本征分解</span></a></div><div class="widget-header dis-select"><span class="name">基于机器学习的降阶模型发展历程</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/"><span class="toc-text">自编码器前言</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Autoencoder/"><span class="toc-text">Variational Autoencoder</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Convolutional%20Autoencoder/"><span class="toc-text">卷积自编码器</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Graph%20Auto-Encoders/"><span class="toc-text">图变分自动编码器</span></a><a class="link active" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Masked%20Autoencoders/"><span class="toc-text">掩码自动编码器</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div><div class="widget-header dis-select"><span class="name">相关数学原理与推导</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Dropout/"><span class="toc-text">DropOut</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%8F%98%E5%88%86%E4%B8%8B%E7%95%8C(ELBO)%E6%8E%A8%E5%AF%BC/"><span class="toc-text">变分下界(ELBO)推导</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96%E7%AE%80%E5%8D%95%E8%AF%81%E6%98%8E/"><span class="toc-text">重参数化简单证明</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/PCA%E7%9A%84%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/"><span class="toc-text">PCA的数学原理</span></a></div><div class="widget-header dis-select"><span class="name">拓展</span></div><div class="widget-body fs14"><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Posterior%20Collapse/"><span class="toc-text">后验坍塌</span></a><a class="link" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/K-Nearest%20Neighbours/"><span class="toc-text">K-近邻算法</span></a></div></widget>
 
 
 </div>
@@ -195,33 +195,1034 @@ mjx-container[display="true"] + br {
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
 <span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">Wiki</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E6%9C%AC%E5%BE%81%E6%AD%A3%E4%BA%A4%E5%88%86%E8%A7%A3/">数据同化与不确定性量化</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">Updated on: <time datetime="2025-08-04T13:27:40.026Z">2025-08-04</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">Updated on: <time datetime="2025-08-04T12:00:13.094Z">2025-08-04</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>自编码器前言</span></h1>
+        <h1 class="text title"><span>掩码自动编码器</span></h1>
         
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><h2 id="ae基本概念">AE基本概念</h2>
-<p>基于机器学习的降阶模型主要是自编码器（AutoEncoder）,其发展历程图大致如下，出自<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/10141545">《Machine Learning
-With Data Assimilation and Uncertainty Quantification for Dynamical
-Systems: A Review》</a>：</p>
-<p><img src="https://github.com/otreatly/image/blob/main/%E5%9F%BA%E4%BA%8EML%E7%9A%84%E9%99%8D%E9%98%B6%E6%A8%A1%E5%9E%8B%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.png?raw=true"></p>
-<p>自动编码器是一种特定类型的自监督神经网络，具有相同的输入和输出。一个典型的自编码器由一个编码器<span class="math inline"><em>E</em></span>和一个解码器<span class="math inline"><em>D</em></span>组成，编码器<span class="math inline"><em>E</em></span>将输入变量映射到约化的隐空间，解码器<span class="math inline"><em>D</em></span>从隐表示中重构全物理场，即: <span class="math display"><em>z</em><sub><em>t</em></sub> = <em>E</em>(<em>x</em><sub><em>t</em></sub>)   <em>x</em><sub><em>t</em></sub><sup><em>A</em><em>E</em></sup> = <em>D</em>(<em>z</em><sub><em>t</em></sub>)</span>
-编码器<span class="math inline"><em>E</em></span>和解码器<span class="math inline"><em>D</em></span>以最小化重构损失为目标进行联合训练，例如用均方误差(
-MSE )来量化: <span class="math display">ℒ<sup><em>M</em><em>S</em><em>E</em></sup> = 𝔼(∥<em>x</em><sub><em>t</em></sub> − <em>D</em> ∘ <em>E</em>(<em>x</em><sub><em>t</em></sub>∥<sub><em>F</em></sub><sup>2</sup>)</span>
-其中，<span class="math inline">ℒ</span>是损失函数，<span class="math inline">∥⋅∥</span>是范德蒙式，<span class="math inline">𝔼</span>是期望算子。</p>
-<p>对比于基于投影的降维方法如POD，自编码器(AE)在处理非线性模型方面具有巨大潜力。但其可解释较差，有许多科研人员在AE的基础上进行改进，如结合传统降维方法（如主成分分析等），下面将介绍前言中发展历程的主要算法。</p>
+  </div><article class="md-text content"><h2 id="前言">前言</h2>
 </article>
 <div class="article-footer">
+    <section id="references">
+      <div class="header"><span>References</span></div>
+      <div class="body">
+        <ul>
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>’</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>[</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>别</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>再</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>无</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>聊</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>地</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>吹</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>捧</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>了</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>，</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>一</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>起</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>来</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>动</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>手</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>实</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>现</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>M</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>A</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>E</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>M</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>k</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>A</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>A</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>S</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>b</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>V</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>L</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>玩</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>玩</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>吧</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>！</p>
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>知</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>乎</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>]</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>:</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>z</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>z</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>m</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>3</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>9</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>’</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          <p>’</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>[</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>M</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>A</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>E</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>M</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>k</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>A</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>d</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>e</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>r</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <ul>
+<li></li>
+</ul>
+
+        </li>
+        
+        <li class="post-title">
+          
+
+        </li>
+        
+        <li class="post-title">
+          <p>知</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>乎</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>]</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>(</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>t</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>s</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>:</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>z</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>l</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>a</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>n</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>z</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>i</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>h</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>u</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>.</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>c</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>o</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>m</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>p</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>/</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>4</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>6</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>7</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>6</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>1</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>0</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>2</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>5</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>)</p>
+
+        </li>
+        
+        <li class="post-title">
+          <p>’</p>
+
+        </li>
+        </ul>
+      </div>
+    </section>
+    
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Prev</div><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/%E5%B9%BF%E4%B9%89%E6%9C%AC%E5%BE%81%E5%88%86%E8%A7%A3/">广义本征分解</a></div><div class="item" id="next"><div class="note">Next</div><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Autoencoder/">Variational Autoencoder</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Prev</div><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Variational%20Graph%20Auto-Encoders/">图变分自动编码器</a></div><div class="item" id="next"><div class="note">Next</div><a href="/wiki/%E6%95%B0%E6%8D%AE%E5%90%8C%E5%8C%96%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%87%8F%E5%8C%96/Dropout/">DropOut</a></div></section></div>
 
 
   <div class="related-wrap md-text" id="comments">
@@ -254,7 +1255,7 @@ target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ae%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">AE基本概念</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>Join Discussion</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>Join Discussion</span></a></div></widget>
 </div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
